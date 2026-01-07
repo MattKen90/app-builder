@@ -19,7 +19,7 @@ description: Phase 0 - Discover and analyze the existing codebase before enhance
 
 **Output**:
 - `.enhancer/DISCOVERY.md`
-- Updated `.enhancer/state/project.json`
+- Updated `.state.json`
 
 ---
 
@@ -268,7 +268,7 @@ Run: /enhancer/vision
 
 ### Step 6: Update State
 
-Update `.enhancer/state/project.json`:
+Update `.state.json`:
 
 ```json
 {

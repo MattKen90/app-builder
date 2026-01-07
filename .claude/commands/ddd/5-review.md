@@ -15,7 +15,7 @@ description: DDD Step 5 - Final review, documentation finalization, and feature 
 | Resource | Greenfield | Enhancer |
 |----------|------------|----------|
 | Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
-| State | `.state/project.json` | `.enhancer/state/project.json` |
+| State | `.state.json` | `.state.json` |
 | Docs | `docs/features/` | `.enhancer/docs/features/` |
 | Final check | Tests pass | Tests pass + no regressions |
 
@@ -177,7 +177,7 @@ Verified:
 
 #### 4A: Mark Feature Complete
 
-Update `.state/project.json`:
+Update `.state.json`:
 
 ```json
 {
@@ -228,7 +228,7 @@ Lines Changed: +{added} -{removed}
 
 ```bash
 git add docs/features/{feature-id}-{feature-name}.md
-git add .state/project.json
+git add .state.json
 git add {any other final changes}
 git commit -m "[DDD:{feature-id}:5] Complete {feature-name}
 
@@ -436,7 +436,7 @@ Before marking complete:
 - [ ] Follows documentation standards
 
 **Project State:**
-- [ ] .state/project.json updated
+- [ ] .state.json updated
 - [ ] Feature marked complete
 - [ ] Metrics captured
 

@@ -4,13 +4,14 @@ description: Initialize project structure based on current mode (greenfield or e
 
 # Init
 
-**Mission**: Initialize the project structure based on the current mode. Reads `.state.json` and sets up appropriate directories and state.
+**Mission**: Initialize the project structure based on the current mode. Reads `.state.json` and sets up appropriate directories.
 
 **Prerequisites**: Mode should be set via `/set-state mode <greenfield|enhancer>`
 
 **Output**:
-- Greenfield: `.state/`, `.ddd_workspaces/`, `docs/features/`
-- Enhancer: `.enhancer/` beachhead with all subdirectories
+- Greenfield: `.ddd_workspaces/`, `docs/features/`, `playbooks/`
+- Enhancer: `.enhancer/` beachhead with subdirectories
+- Updated `.state.json` with initialization timestamp
 
 ---
 
@@ -24,7 +25,7 @@ Read `.state.json` file:
 🔍 Checking mode...
 ```
 
-**If mode not set:**
+**If mode not set or file missing:**
 ```
 ⚠️ Mode Not Set
 
@@ -47,18 +48,15 @@ Then run /init again.
 ```
 🔍 Checking existing structure...
 
-- .state/ exists: {Yes/No}
 - .ddd_workspaces/ exists: {Yes/No}
+- app.initialized in .state.json: {Yes/No}
 ```
 
 **If already initialized:**
 ```
 ℹ️ Already Initialized (Greenfield)
 
-Project structure already exists:
-- .state/project.json
-- .ddd_workspaces/
-- docs/features/
+Project structure already exists.
 
 Options:
 1. Continue with existing setup
@@ -71,33 +69,28 @@ Which option?
 ### Create Structure
 
 ```bash
-mkdir -p .state
 mkdir -p .ddd_workspaces
 mkdir -p docs/features
 mkdir -p playbooks
 ```
 
-### Initialize State
+### Update State
 
-Create `.state/project.json`:
+Update `.state.json`:
 
 ```json
 {
   "mode": "greenfield",
   "app": {
     "name": null,
-    "started": "{timestamp}",
-    "phase": "1"
+    "initialized": "{timestamp}",
+    "phase": 1
   },
   "features": {},
   "ddd": {
-    "current_feature": null,
-    "current_step": null,
+    "feature": null,
+    "step": null,
     "workspace": null
-  },
-  "metrics": {
-    "features_completed": 0,
-    "apps_completed": 0
   }
 }
 ```
@@ -108,17 +101,14 @@ Create `.state/project.json`:
 ✅ Greenfield Project Initialized
 
 Structure created:
-├── .state.json           # Project state (mode: greenfield)
-├── .state/
-│   └── project.json      # Project tracking
+├── .state.json           # All project state
 ├── .ddd_workspaces/      # Feature workspaces
 ├── docs/features/        # Feature documentation
 └── playbooks/            # Deployment automation
 
 Next Steps:
-1. Phase 1: Use vision-architect to produce VISION.md
-2. Phase 2: Use tech-architect to produce ARCHITECTURE.md + ROADMAP.md
-3. Phase 3: Run /ddd/1 to start building features
+1. Run /phases/1 to define your vision
+2. Or invoke vision-architect directly
 
 Ready to begin!
 ```
@@ -168,36 +158,27 @@ Which option?
 ### Create Beachhead
 
 ```bash
-mkdir -p .enhancer/state
 mkdir -p .enhancer/workspaces
 mkdir -p .enhancer/docs/features
 ```
 
-### Initialize State
+### Update State
 
-Create `.enhancer/state/project.json`:
+Update `.state.json`:
 
 ```json
 {
   "mode": "enhancer",
-  "enhancer": {
+  "app": {
+    "name": null,
     "initialized": "{timestamp}",
-    "target_repo": "{repo_name}",
-    "phase": "0"
-  },
-  "discovery": {
-    "status": "pending",
-    "completed": null
+    "phase": 0
   },
   "features": {},
   "ddd": {
-    "current_feature": null,
-    "current_step": null,
+    "feature": null,
+    "step": null,
     "workspace": null
-  },
-  "metrics": {
-    "features_completed": 0,
-    "enhancements_shipped": 0
   }
 }
 ```
@@ -223,21 +204,18 @@ Detected:
 ✅ Enhancer Beachhead Initialized
 
 Structure created:
-├── .state.json                 # Project state (mode: enhancer)
+├── .state.json                 # All project state
 └── .enhancer/                  # Your beachhead
-    ├── state/project.json      # Project tracking
     ├── workspaces/             # DDD workspaces
     └── docs/features/          # Feature documentation
 
 Next Steps:
-1. Phase 0: Run /discovery to analyze this codebase
+1. Run /phases/0 to analyze this codebase
 2. Review .enhancer/DISCOVERY.md
-3. Phase 1: Use vision-architect for enhancement vision
-4. Phase 2: Use tech-architect for architecture
-5. Phase 3: Run /ddd/1 to start building enhancements
+3. Continue with /phases/1, /phases/2, /phases/3
 
 Ready to begin discovery?
-→ Run: /discovery
+→ Run: /phases/0
 ```
 
 ---
@@ -248,13 +226,15 @@ Commands use these paths based on mode:
 
 | Resource | Greenfield | Enhancer |
 |----------|------------|----------|
-| State | `.state/project.json` | `.enhancer/state/project.json` |
+| State | `.state.json` | `.state.json` |
 | Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
 | Feature docs | `docs/features/` | `.enhancer/docs/features/` |
 | Vision | `VISION.md` | `.enhancer/VISION.md` |
 | Architecture | `ARCHITECTURE.md` | `.enhancer/ARCHITECTURE.md` |
 | Roadmap | `ROADMAP.md` | `.enhancer/ROADMAP.md` |
 | Feature IDs | F1, F2, F3 | E-F1, E-F2, E-F3 |
+
+**Note:** State is ALWAYS in `.state.json` at project root, regardless of mode.
 
 ---
 

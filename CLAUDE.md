@@ -55,7 +55,6 @@ app-builder/
 │           ├── 3-code-breakdown.md
 │           ├── 4-implement.md
 │           └── 5-review.md
-├── .state/                      # Greenfield state
 ├── .ddd_workspaces/             # Greenfield workspaces
 ├── docs/features/               # Greenfield feature docs
 └── playbooks/                   # Deployment automation
@@ -138,22 +137,43 @@ Then invoke agents directly or run DDD commands.
 |--------|------------|----------|
 | Phase 0 | Skipped | Required (/discovery) |
 | Feature IDs | F1, F2, F3 | E-F1, E-F2, E-F3 |
-| State | `.state/` | `.enhancer/state/` |
+| State | `.state.json` | `.state.json` |
 | Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
 | Vision | `VISION.md` | `.enhancer/VISION.md` |
 | Testing | New tests | New + regression tests |
 
+**Note:** State is ALWAYS in `.state.json` at project root, regardless of mode.
+
 ## State Management
 
-Project state lives in `.state.json`:
+**Single source of truth:** `.state.json` at project root.
 
 ```json
 {
-  "mode": "greenfield"
+  "mode": "greenfield",
+  "app": {
+    "name": "MyApp",
+    "initialized": "2024-01-15T10:00:00Z",
+    "phase": 2
+  },
+  "features": {
+    "F1": { "name": "User Auth", "status": "complete" },
+    "F2": { "name": "Dashboard", "status": "in_progress" }
+  },
+  "ddd": {
+    "feature": "F2",
+    "step": 3,
+    "workspace": ".ddd_workspaces/F2-dashboard/"
+  }
 }
 ```
 
-All commands read from this file to determine behavior.
+**On context load/reload**, Claude reads this file and instantly knows:
+- Current mode and phase
+- All features and their status
+- Current DDD position (which feature, which step)
+
+This enables seamless continuation after compaction or context switches.
 
 ## Enhancer Beachhead
 
@@ -162,15 +182,14 @@ When in enhancer mode, all your work lives in `.enhancer/`:
 ```
 target-repo/
 ├── [their existing files]       # Untouched
-├── .state.json                  # {"mode": "enhancer"}
+├── .state.json                  # All state (mode, features, ddd)
 └── .enhancer/                   # Your beachhead
     ├── DISCOVERY.md             # Phase 0 output
     ├── VISION.md                # Phase 1 output
     ├── ARCHITECTURE.md          # Phase 2 output
     ├── ROADMAP.md               # Phase 2 output
-    ├── state/project.json
-    ├── workspaces/
-    └── docs/features/
+    ├── workspaces/              # DDD workspaces
+    └── docs/features/           # Feature documentation
 ```
 
 ## Rules

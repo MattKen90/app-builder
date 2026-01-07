@@ -17,7 +17,7 @@ Read `.state.json` and set paths accordingly:
 
 | Resource | Greenfield | Enhancer |
 |----------|------------|----------|
-| State | `.state/project.json` | `.enhancer/state/project.json` |
+| State | `.state.json` | `.state.json` |
 | Roadmap | `ROADMAP.md` | `.enhancer/ROADMAP.md` |
 | Architecture | `ARCHITECTURE.md` | `.enhancer/ARCHITECTURE.md` |
 | Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
@@ -70,7 +70,7 @@ Paths:
 - Display: "Using specified feature: {feature-id}"
 
 **If no argument provided:**
-1. Read `.state/project.json` to check:
+1. Read `.state.json` to check:
    - Is there a feature already in-progress? → Resume it
    - If not, what features are completed?
 2. Read `ROADMAP.md` to get ordered feature list
@@ -267,7 +267,7 @@ If user has questions:
 
 ### Step 7: Update State
 
-Once user approves, update `.state/project.json`:
+Once user approves, update `.state.json`:
 
 ```json
 {

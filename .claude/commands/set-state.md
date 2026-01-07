@@ -5,7 +5,36 @@ argument-hint: <key> <value> (e.g., mode greenfield)
 
 # Set State
 
-**Mission**: Manage project state via `.state.json`. All commands read from this file.
+**Mission**: Manage project state via `.state.json`. Single source of truth for all project state.
+
+---
+
+## State Schema
+
+`.state.json` contains all project state:
+
+```json
+{
+  "mode": "greenfield",
+  "app": {
+    "name": null,
+    "initialized": null,
+    "phase": 0
+  },
+  "features": {},
+  "ddd": {
+    "feature": null,
+    "step": null,
+    "workspace": null
+  }
+}
+```
+
+**On context load/reload**, Claude reads this file to understand:
+- Current mode (greenfield/enhancer)
+- Current phase (0-3)
+- All features and their status
+- Current DDD position (which feature, which step)
 
 ---
 
@@ -16,7 +45,7 @@ argument-hint: <key> <value> (e.g., mode greenfield)
 ```
 
 **Arguments** (from `$ARGUMENTS`):
-- First word: key name
+- First word: key name (supports dot notation: `app.name`)
 - Second word: value to set
 
 ---
@@ -30,60 +59,47 @@ Extract key and value from `$ARGUMENTS`:
 - First token = key
 - Second token = value
 
-**If arguments missing or incomplete:**
+**If no arguments (show current state):**
 ```
-⚠️ Usage: /set-state <key> <value>
+📊 Current State
 
-Available keys:
-- mode: greenfield | enhancer
+Mode: {mode}
+App: {app.name or "Not set"}
+Phase: {app.phase}
 
-Current state:
-{show contents of .state.json}
+Features:
+{list features with status}
 
-Example: /set-state mode enhancer
+DDD:
+- Feature: {ddd.feature or "None"}
+- Step: {ddd.step or "N/A"}
 ```
 
 ### Step 2: Validate Key
 
-**Valid keys:**
-- `mode`: Project mode (`greenfield` or `enhancer`)
+**Valid top-level keys:**
+- `mode`: Project mode (`greenfield` | `enhancer`)
+- `app.name`: Application name
+- `app.phase`: Current phase (0-3)
 
-**If invalid key:**
-```
-⚠️ Unknown key: "{key}"
-
-Available keys:
-- mode: greenfield | enhancer
-```
+**Note:** `features` and `ddd` are managed by DDD commands, not directly via set-state.
 
 ### Step 3: Validate Value
 
 **For `mode`:**
 - Valid: `greenfield`, `enhancer`
-- Invalid: anything else
 
-**If invalid value:**
-```
-⚠️ Invalid value for {key}: "{value}"
+**For `app.phase`:**
+- Valid: `0`, `1`, `2`, `3`
 
-Valid values for mode:
-- greenfield: Build new apps from scratch
-- enhancer: Enhance existing apps
-```
+**For `app.name`:**
+- Valid: any string
 
 ### Step 4: Update State File
 
-Read `.state.json` (create if doesn't exist):
+Read `.state.json`, update the specified key, write back.
 
-```json
-{
-  "mode": "greenfield"
-}
-```
-
-Update the specified key with new value.
-
-Write back to `.state.json`.
+For dot notation keys like `app.name`, update nested value.
 
 ### Step 5: Confirm
 
@@ -91,90 +107,99 @@ Write back to `.state.json`.
 ✅ State updated
 
 {key}: {old_value} → {value}
-
-Current state:
-{
-  "mode": "{value}"
-}
 ```
 
 ---
 
-## State File Location
+## State File Details
 
-`.state.json` at project root.
+**Location:** `.state.json` at project root (both modes)
 
 **Default state:**
 ```json
 {
-  "mode": "greenfield"
+  "mode": "greenfield",
+  "app": {
+    "name": null,
+    "initialized": null,
+    "phase": 0
+  },
+  "features": {},
+  "ddd": {
+    "feature": null,
+    "step": null,
+    "workspace": null
+  }
 }
 ```
 
----
+**Feature entry (added by DDD commands):**
+```json
+{
+  "features": {
+    "F1": {
+      "name": "User Authentication",
+      "tier": "free",
+      "status": "complete",
+      "started": "2024-01-15T10:00:00Z",
+      "completed": "2024-01-15T11:00:00Z"
+    },
+    "F2": {
+      "name": "Dashboard",
+      "tier": "free",
+      "status": "in_progress",
+      "started": "2024-01-15T11:30:00Z"
+    }
+  }
+}
+```
 
-## How Other Commands Use State
-
-All mode-aware commands read `.state.json`:
-
-```python
-import json
-
-def get_state():
-    try:
-        with open('.state.json', 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return {"mode": "greenfield"}
-
-state = get_state()
-mode = state.get("mode", "greenfield")
+**DDD tracking (updated by DDD commands):**
+```json
+{
+  "ddd": {
+    "feature": "F2",
+    "step": 3,
+    "workspace": ".ddd_workspaces/F2-dashboard/"
+  }
+}
 ```
 
 ---
 
 ## Examples
 
-**Set mode to enhancer:**
+**Set mode:**
 ```
 /set-state mode enhancer
-
-✅ State updated
-mode: greenfield → enhancer
 ```
 
-**Invalid key:**
+**Set app name:**
 ```
-/set-state foo bar
-
-⚠️ Unknown key: "foo"
-
-Available keys:
-- mode: greenfield | enhancer
+/set-state app.name "TaskFlow Pro"
 ```
 
-**Invalid value:**
+**Set phase:**
 ```
-/set-state mode invalid
-
-⚠️ Invalid value for mode: "invalid"
-
-Valid values for mode:
-- greenfield: Build new apps from scratch
-- enhancer: Enhance existing apps
+/set-state app.phase 2
 ```
 
-**No arguments (show current state):**
+**Show current state (no args):**
 ```
 /set-state
 
-⚠️ Usage: /set-state <key> <value>
+📊 Current State
 
-Available keys:
-- mode: greenfield | enhancer
+Mode: greenfield
+App: TaskFlow Pro
+Phase: 2
 
-Current state:
-{
-  "mode": "greenfield"
-}
+Features:
+- F1: User Authentication [complete]
+- F2: Dashboard [in_progress]
+- F3: Data Export [pending]
+
+DDD:
+- Feature: F2
+- Step: 3 (Code Breakdown)
 ```
