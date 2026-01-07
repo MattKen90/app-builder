@@ -31,7 +31,6 @@ You bring a rough idea. AI researches, designs, architects, and builds a complet
 
 ```
 /set-state mode greenfield
-/init
 /phases/1    → AI interviews you, creates vision
 /phases/2    → AI designs architecture, creates roadmap
 /phases/3    → AI builds features one by one
@@ -42,7 +41,6 @@ You bring a rough idea. AI researches, designs, architects, and builds a complet
 ```
 /set-state mode enhancer
 /set-state target /path/to/your/existing/app
-/init
 /phases/0    → AI analyzes your existing codebase
 /phases/1    → AI proposes enhancements
 /phases/2    → AI designs within your existing patterns
@@ -112,7 +110,6 @@ Repeat for each feature until your app is complete.
 | `/set-state mode greenfield` | Start a new app from scratch |
 | `/set-state mode enhancer` | Enhance an existing app |
 | `/set-state target /path` | Point to existing app (enhancer mode) |
-| `/init` | Set up project structure |
 | `/phases/0` | Discover existing codebase (enhancer only) |
 | `/phases/1` | Create product vision |
 | `/phases/2` | Design architecture and roadmap |
@@ -192,7 +189,7 @@ Stuck? Just ask. AI is designed to guide you through each phase.
 
 If something's broken, check:
 1. Is your mode set? (`/set-state`)
-2. Did you run `/init`?
+2. Is your target set? (enhancer mode)
 3. Are you in the right phase?
 
 ---
@@ -201,7 +198,6 @@ If something's broken, check:
 
 ```
 /set-state mode greenfield
-/init
 /phases/1
 ```
 

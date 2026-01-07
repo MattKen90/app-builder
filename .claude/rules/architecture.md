@@ -40,7 +40,6 @@ project-root/
 │   ├── commands/
 │   │   ├── phases/             # Builder commands (root = builder)
 │   │   ├── ddd/
-│   │   ├── init.md
 │   │   ├── set-state.md
 │   │   └── app/                # App commands (/app/...)
 │   ├── skills/
@@ -399,7 +398,7 @@ playbooks/
 | Command | Purpose |
 |---------|---------|
 | `/set-state mode <mode>` | Set greenfield or enhancer |
-| `/init` | Initialize project structure |
+| `/set-state target <path>` | Set target app (enhancer) |
 | `/phases/0` | Discovery (enhancer only) |
 | `/phases/1` | Vision |
 | `/phases/2` | Technical Foundation |

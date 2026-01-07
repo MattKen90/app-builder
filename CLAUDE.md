@@ -6,7 +6,6 @@ Framework for building monetizable apps with Claude Code. MRR is King.
 
 ```
 /set-state mode greenfield    # or: /set-state mode enhancer
-/init
 /phases/1                     # Vision
 /phases/2                     # Architecture
 /phases/3                     # Build
@@ -19,7 +18,7 @@ Enhancer mode: Run `/phases/0` first to analyze existing codebase.
 | Command | Purpose |
 |---------|---------|
 | `/set-state mode <mode>` | Set greenfield or enhancer |
-| `/init` | Initialize project structure |
+| `/set-state target <path>` | Set target app (enhancer) |
 | `/phases/0` | Discovery (enhancer only) |
 | `/phases/1` | Vision |
 | `/phases/2` | Technical Foundation |
