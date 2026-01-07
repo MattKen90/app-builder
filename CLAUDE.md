@@ -44,6 +44,11 @@ app-builder/
 │       ├── mode.md              # /mode - set greenfield or enhancer
 │       ├── init.md              # /init - initialize based on mode
 │       ├── discovery.md         # /discovery - Phase 0 (enhancer only)
+│       ├── phases/              # Guided phase walkthroughs
+│       │   ├── 0.md             # /phases/0 - Discovery (enhancer only)
+│       │   ├── 1.md             # /phases/1 - Vision
+│       │   ├── 2.md             # /phases/2 - Technical Foundation
+│       │   └── 3.md             # /phases/3 - Build (DDD cycle)
 │       └── ddd/                 # Single DDD set (adapts to mode)
 │           ├── 1-understand.md
 │           ├── 2-document.md
@@ -58,48 +63,74 @@ app-builder/
 
 ## Quick Start
 
-### Step 1: Set Mode
+### Option A: Guided Walkthrough (Recommended)
+
+Just run the phases in order:
 
 ```
-/mode greenfield    # Building a new app
-/mode enhancer      # Enhancing an existing app
+/mode greenfield    # or /mode enhancer
+/init
+/phases/0           # Enhancer only - Discovery
+/phases/1           # Vision
+/phases/2           # Technical Foundation
+/phases/3           # Build (DDD cycle)
 ```
 
-### Step 2: Initialize
+Each phase command invokes the right agent and guides you through.
+
+### Option B: Direct Commands
+
+For experienced users:
 
 ```
-/init               # Sets up structure based on mode
+/mode greenfield    # Set mode
+/init               # Initialize structure
 ```
 
-### Step 3: Build
+Then invoke agents directly or run DDD commands.
 
-**Greenfield:**
-```
-Phase 1: vision-architect  → VISION.md
-Phase 2: tech-architect    → ARCHITECTURE.md, ROADMAP.md
-Phase 3: /ddd/1 through /ddd/5 (repeat for each feature)
-```
+### What Each Phase Does
 
-**Enhancer:**
-```
-Phase 0: /discovery        → .enhancer/DISCOVERY.md
-Phase 1: vision-architect  → .enhancer/VISION.md
-Phase 2: tech-architect    → .enhancer/ARCHITECTURE.md, ROADMAP.md
-Phase 3: /ddd/1 through /ddd/5 (repeat for each enhancement)
-```
+| Phase | Greenfield | Enhancer |
+|-------|------------|----------|
+| 0 | Skipped | Analyze existing codebase → DISCOVERY.md |
+| 1 | Define vision → VISION.md | Define enhancements → VISION.md |
+| 2 | Design architecture → ARCHITECTURE.md, ROADMAP.md | Design integration → same |
+| 3 | Build features via DDD | Build enhancements via DDD |
 
 ## Command Reference
 
+### Setup Commands
+
 | Command | Purpose |
 |---------|---------|
-| `/mode` | Set or show current mode |
-| `/init` | Initialize project structure |
-| `/discovery` | Phase 0: Analyze existing codebase (enhancer only) |
-| `/ddd/1` | DDD Step 1: Understand |
-| `/ddd/2` | DDD Step 2: Document |
-| `/ddd/3` | DDD Step 3: Code-Breakdown |
-| `/ddd/4` | DDD Step 4: Implement |
-| `/ddd/5` | DDD Step 5: Review |
+| `/mode` | Set or show current mode (greenfield/enhancer) |
+| `/init` | Initialize project structure based on mode |
+
+### Phase Commands (Guided Walkthrough)
+
+| Command | Purpose |
+|---------|---------|
+| `/phases/0` | Discovery - Analyze existing codebase (enhancer only) |
+| `/phases/1` | Vision - Define what to build |
+| `/phases/2` | Technical Foundation - Design architecture |
+| `/phases/3` | Build - Start/resume DDD cycle |
+
+### DDD Commands (Direct Access)
+
+| Command | Purpose |
+|---------|---------|
+| `/ddd/1` | DDD Step 1: Understand & approve spec |
+| `/ddd/2` | DDD Step 2: Document before building |
+| `/ddd/3` | DDD Step 3: Break into implementation phases |
+| `/ddd/4` | DDD Step 4: Build phase by phase |
+| `/ddd/5` | DDD Step 5: Review & complete |
+
+### Legacy Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/discovery` | Same as `/phases/0` (enhancer only) |
 
 ## Mode Differences
 
