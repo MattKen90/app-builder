@@ -6,7 +6,7 @@ description: DDD Step 3 - Break down implementation into phases with checkpoints
 
 **Mission**: Break the feature into implementation phases. Each phase is a buildable, testable unit with clear deliverables.
 
-**Mode-Aware**: Reads `.mode` file to determine paths. In enhancer mode, phases include integration planning.
+**Mode-Aware**: Reads `.state.json` to determine paths. In enhancer mode, phases include integration planning.
 
 ---
 

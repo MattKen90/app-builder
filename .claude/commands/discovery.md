@@ -9,7 +9,7 @@ description: Phase 0 - Discover and analyze the existing codebase before enhance
 **Mode**: Enhancer only. This command is not used in greenfield mode.
 
 **Prerequisites**:
-- Mode set to `enhancer` (check `.mode` file)
+- Mode set to `enhancer` (check `.state.json`)
 - `/init` has been run
 - `.enhancer/` beachhead exists
 
@@ -27,7 +27,7 @@ description: Phase 0 - Discover and analyze the existing codebase before enhance
 
 ### Step 0: Check Mode
 
-Read `.mode` file:
+Read `.state.json` file:
 
 ```
 🔍 Checking mode...
@@ -43,7 +43,7 @@ Current mode: {greenfield|not set}
 Discovery analyzes EXISTING codebases before enhancement.
 For greenfield projects, skip to Phase 1 (Vision).
 
-To switch to enhancer mode: /mode enhancer
+To switch to enhancer mode: /set-state mode enhancer
 ```
 
 ### Step 1: Verify Prerequisites

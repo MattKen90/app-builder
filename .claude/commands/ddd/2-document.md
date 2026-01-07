@@ -6,7 +6,7 @@ description: DDD Step 2 - Create user-facing documentation before implementation
 
 **Mission**: Create user-facing documentation for the feature BEFORE building it. Document what we're about to build, not what we built.
 
-**Mode-Aware**: Reads `.mode` file to determine paths.
+**Mode-Aware**: Reads `.state.json` to determine paths.
 
 ---
 

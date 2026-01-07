@@ -7,13 +7,13 @@ argument-hint: [feature-id] (e.g., F1, E-F1) - optional, auto-detects next featu
 
 **Mission**: Select next feature, create workspace, understand spec, get human approval before building.
 
-**Mode-Aware**: This command adapts to greenfield or enhancer mode by reading `.mode` file.
+**Mode-Aware**: This command adapts to greenfield or enhancer mode by reading `.state.json`.
 
 ---
 
 ## Mode Detection
 
-Read `.mode` file and set paths accordingly:
+Read `.state.json` and set paths accordingly:
 
 | Resource | Greenfield | Enhancer |
 |----------|------------|----------|
@@ -28,7 +28,7 @@ Read `.mode` file and set paths accordingly:
 ```
 ⚠️ Mode Not Set
 
-Please set mode first: /mode <greenfield|enhancer>
+Please set mode first: /set-state mode <greenfield|enhancer>
 Then run /init to set up project structure.
 ```
 

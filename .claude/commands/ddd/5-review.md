@@ -6,7 +6,7 @@ description: DDD Step 5 - Final review, documentation finalization, and feature 
 
 **Mission**: Final review, finalize documentation, mark feature complete, clean up workspace.
 
-**Mode-Aware**: Reads `.mode` file to determine paths. In enhancer mode, verifies no regressions in existing functionality.
+**Mode-Aware**: Reads `.state.json` to determine paths. In enhancer mode, verifies no regressions in existing functionality.
 
 ---
 

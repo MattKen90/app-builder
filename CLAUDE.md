@@ -29,7 +29,7 @@ All commands are mode-aware—set the mode once, and everything adapts.
 ```
 app-builder/
 ├── CLAUDE.md                    # This file
-├── .mode                        # Current mode (greenfield/enhancer)
+├── .state.json                  # Project state (mode, etc.)
 ├── .claude/
 │   ├── rules/                   # Shared rules (both modes)
 │   │   ├── revenue.md
@@ -41,7 +41,7 @@ app-builder/
 │   │   ├── tech-architect.md    # Phase 2
 │   │   └── discovery-architect.md # Phase 0 (enhancer only)
 │   └── commands/                # Smart commands (mode-aware)
-│       ├── mode.md              # /mode - set greenfield or enhancer
+│       ├── set-state.md         # /set-state - manage project state
 │       ├── init.md              # /init - initialize based on mode
 │       ├── discovery.md         # /discovery - Phase 0 (enhancer only)
 │       ├── phases/              # Guided phase walkthroughs
@@ -68,12 +68,12 @@ app-builder/
 Just run the phases in order:
 
 ```
-/mode greenfield    # or /mode enhancer
+/set-state mode greenfield    # or: /set-state mode enhancer
 /init
-/phases/0           # Enhancer only - Discovery
-/phases/1           # Vision
-/phases/2           # Technical Foundation
-/phases/3           # Build (DDD cycle)
+/phases/0                     # Enhancer only - Discovery
+/phases/1                     # Vision
+/phases/2                     # Technical Foundation
+/phases/3                     # Build (DDD cycle)
 ```
 
 Each phase command invokes the right agent and guides you through.
@@ -83,8 +83,8 @@ Each phase command invokes the right agent and guides you through.
 For experienced users:
 
 ```
-/mode greenfield    # Set mode
-/init               # Initialize structure
+/set-state mode greenfield    # Set mode
+/init                         # Initialize structure
 ```
 
 Then invoke agents directly or run DDD commands.
@@ -104,7 +104,7 @@ Then invoke agents directly or run DDD commands.
 
 | Command | Purpose |
 |---------|---------|
-| `/mode` | Set or show current mode (greenfield/enhancer) |
+| `/set-state` | Manage project state (e.g., `/set-state mode greenfield`) |
 | `/init` | Initialize project structure based on mode |
 
 ### Phase Commands (Guided Walkthrough)
@@ -143,6 +143,18 @@ Then invoke agents directly or run DDD commands.
 | Vision | `VISION.md` | `.enhancer/VISION.md` |
 | Testing | New tests | New + regression tests |
 
+## State Management
+
+Project state lives in `.state.json`:
+
+```json
+{
+  "mode": "greenfield"
+}
+```
+
+All commands read from this file to determine behavior.
+
 ## Enhancer Beachhead
 
 When in enhancer mode, all your work lives in `.enhancer/`:
@@ -150,7 +162,7 @@ When in enhancer mode, all your work lives in `.enhancer/`:
 ```
 target-repo/
 ├── [their existing files]       # Untouched
-├── .mode                        # "enhancer"
+├── .state.json                  # {"mode": "enhancer"}
 └── .enhancer/                   # Your beachhead
     ├── DISCOVERY.md             # Phase 0 output
     ├── VISION.md                # Phase 1 output

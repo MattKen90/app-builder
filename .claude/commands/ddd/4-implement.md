@@ -6,7 +6,7 @@ description: DDD Step 4 - Execute implementation plan phase by phase
 
 **Mission**: Build the feature following the implementation plan. Execute phase by phase with checkpoints.
 
-**Mode-Aware**: Reads `.mode` file to determine paths. In enhancer mode, includes regression testing to ensure existing functionality isn't broken.
+**Mode-Aware**: Reads `.state.json` to determine paths. In enhancer mode, includes regression testing to ensure existing functionality isn't broken.
 
 ---
 

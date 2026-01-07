@@ -4,9 +4,9 @@ description: Initialize project structure based on current mode (greenfield or e
 
 # Init
 
-**Mission**: Initialize the project structure based on the current mode. Reads `.mode` file and sets up appropriate directories and state.
+**Mission**: Initialize the project structure based on the current mode. Reads `.state.json` and sets up appropriate directories and state.
 
-**Prerequisites**: Mode should be set via `/mode` command
+**Prerequisites**: Mode should be set via `/set-state mode <greenfield|enhancer>`
 
 **Output**:
 - Greenfield: `.state/`, `.ddd_workspaces/`, `docs/features/`
@@ -18,7 +18,7 @@ description: Initialize project structure based on current mode (greenfield or e
 
 ### Step 1: Check Mode
 
-Read `.mode` file:
+Read `.state.json` file:
 
 ```
 🔍 Checking mode...
@@ -30,8 +30,8 @@ Read `.mode` file:
 
 Please set mode first:
 
-/mode greenfield  - Building a new app from scratch
-/mode enhancer    - Enhancing an existing app
+/set-state mode greenfield  - Building a new app from scratch
+/set-state mode enhancer    - Enhancing an existing app
 
 Then run /init again.
 ```
@@ -108,7 +108,7 @@ Create `.state/project.json`:
 ✅ Greenfield Project Initialized
 
 Structure created:
-├── .mode                 # Mode: greenfield
+├── .state.json           # Project state (mode: greenfield)
 ├── .state/
 │   └── project.json      # Project tracking
 ├── .ddd_workspaces/      # Feature workspaces
@@ -147,7 +147,7 @@ This repository appears to be empty or nearly empty.
 Enhancer mode is for existing apps with code to enhance.
 
 For building from scratch:
-/mode greenfield
+/set-state mode greenfield
 /init
 ```
 
@@ -223,7 +223,7 @@ Detected:
 ✅ Enhancer Beachhead Initialized
 
 Structure created:
-├── .mode                       # Mode: enhancer
+├── .state.json                 # Project state (mode: enhancer)
 └── .enhancer/                  # Your beachhead
     ├── state/project.json      # Project tracking
     ├── workspaces/             # DDD workspaces
