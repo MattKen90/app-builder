@@ -94,8 +94,10 @@ project-root/
   },
   "ddd": {
     "feature": "F2",
-    "step": 3,
-    "workspace": ".ddd_workspaces/F2-dashboard/"
+    "step": 4,
+    "workspace": ".ddd_workspaces/F2-dashboard/",
+    "last_action": "Implementing dashboard API endpoint",
+    "last_checkpoint": "2024-01-15T11:30:00Z"
   }
 }
 ```
@@ -104,7 +106,8 @@ On context load/reload, Claude reads this file and instantly knows:
 - Current mode and phase
 - **Target path** (where app code lives)
 - All features and their status
-- Current DDD position
+- Current DDD position (feature, step, workspace)
+- **Resume context** (last_action tells what was being worked on)
 
 **Target behavior:**
 - Greenfield: `target: null` or `target: "./app/"` → Build locally

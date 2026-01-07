@@ -196,15 +196,19 @@ Update `.state.json`:
     }
   },
   "ddd": {
-    "current_feature": null,
-    "current_step": null,
-    "workspace": null
+    "feature": null,
+    "step": null,
+    "workspace": null,
+    "last_action": "Completed {feature-id}: {feature-name}",
+    "last_checkpoint": "{timestamp}"
   },
   "metrics": {
     "features_completed": {N+1}
   }
 }
 ```
+
+**Note**: DDD fields are cleared (null) when no feature is in progress. `last_action` records what was just completed for context.
 
 #### 4B: Calculate Metrics
 

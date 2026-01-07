@@ -263,6 +263,8 @@ If user wants changes:
 
 ### Step 7: Update State
 
+Update `.state.json` with step completion and resume context:
+
 ```json
 {
   "features": {
@@ -275,7 +277,11 @@ If user wants changes:
     }
   },
   "ddd": {
-    "current_step": "3"
+    "feature": "{feature-id}",
+    "step": 3,
+    "workspace": "{workspace-path}",
+    "last_action": "Implementation plan approved, ready for step 4",
+    "last_checkpoint": "{timestamp}"
   }
 }
 ```

@@ -27,8 +27,10 @@ Enhancer mode: Run `/phases/0` first to analyze existing codebase.
 
 ## On Context Load
 
-Read `.state.json` to understand current state:
+@.state.json
+
+Current state includes:
 - Mode (greenfield/enhancer)
 - Current phase
 - Features and their status
-- Current DDD position
+- Current DDD position (feature, step, last_action)

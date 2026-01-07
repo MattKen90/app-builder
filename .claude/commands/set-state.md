@@ -26,7 +26,9 @@ argument-hint: <key> <value> (e.g., mode greenfield)
   "ddd": {
     "feature": null,
     "step": null,
-    "workspace": null
+    "workspace": null,
+    "last_action": null,
+    "last_checkpoint": null
   }
 }
 ```
@@ -37,6 +39,7 @@ argument-hint: <key> <value> (e.g., mode greenfield)
 - Current phase (0-3)
 - All features and their status
 - Current DDD position (which feature, which step)
+- **Resume context** (last_action tells what was being worked on)
 
 **Target behavior:**
 - `null` or `"./app/"` → Greenfield, build locally in `app/`
@@ -170,11 +173,20 @@ For dot notation keys like `app.name`, update nested value.
 {
   "ddd": {
     "feature": "F2",
-    "step": 3,
-    "workspace": ".ddd_workspaces/F2-dashboard/"
+    "step": 4,
+    "workspace": ".ddd_workspaces/F2-dashboard/",
+    "last_action": "Implementing dashboard API endpoint",
+    "last_checkpoint": "2024-01-15T11:30:00Z"
   }
 }
 ```
+
+**DDD field meanings:**
+- `feature`: Current feature ID (F1, F2, E-F1, etc.)
+- `step`: Current DDD step (1-5)
+- `workspace`: Path to feature's DDD workspace
+- `last_action`: Human-readable description of last work done (for context resume)
+- `last_checkpoint`: Timestamp of last successful checkpoint
 
 ---
 

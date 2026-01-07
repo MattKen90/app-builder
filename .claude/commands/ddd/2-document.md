@@ -235,6 +235,8 @@ Loop until approved.
 
 ### Step 7: Update State
 
+Update `.state.json` with step completion and resume context:
+
 ```json
 {
   "features": {
@@ -246,7 +248,11 @@ Loop until approved.
     }
   },
   "ddd": {
-    "current_step": "2"
+    "feature": "{feature-id}",
+    "step": 2,
+    "workspace": "{workspace-path}",
+    "last_action": "Documentation draft approved, ready for step 3",
+    "last_checkpoint": "{timestamp}"
   }
 }
 ```

@@ -1,0 +1,17 @@
+{
+  "mode": null,
+  "target": null,
+  "app": {
+    "name": null,
+    "initialized": null,
+    "phase": 0
+  },
+  "features": {},
+  "ddd": {
+    "feature": null,
+    "step": null,
+    "workspace": null,
+    "last_action": null,
+    "last_checkpoint": null
+  }
+}

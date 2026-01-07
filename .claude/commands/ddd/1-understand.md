@@ -272,9 +272,11 @@ Once user approves, update `.state.json`:
 ```json
 {
   "ddd": {
-    "current_feature": "F3",
-    "current_step": "1",
-    "workspace": ".ddd_workspaces/F3-data-export/"
+    "feature": "F3",
+    "step": 1,
+    "workspace": ".ddd_workspaces/F3-data-export/",
+    "last_action": "Feature spec approved, ready for step 2",
+    "last_checkpoint": "{timestamp}"
   },
   "features": {
     "F3": {

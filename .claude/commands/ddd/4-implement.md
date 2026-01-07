@@ -259,6 +259,8 @@ From DOCS_DRAFT.md:
 
 ### Step 5: Update State
 
+Update `.state.json` with step completion and resume context:
+
 ```json
 {
   "features": {
@@ -272,10 +274,21 @@ From DOCS_DRAFT.md:
     }
   },
   "ddd": {
-    "current_step": "4"
+    "feature": "{feature-id}",
+    "step": 4,
+    "workspace": "{workspace-path}",
+    "last_action": "All implementation phases complete, tests passing",
+    "last_checkpoint": "{timestamp}"
   }
 }
 ```
+
+**Important**: Update `last_action` throughout Step 4 as you complete significant work:
+- After each deliverable: `"Completed: {deliverable description}"`
+- After each checkpoint: `"Phase {N} checkpoint passed"`
+- On test failures: `"Debugging: {test name} - {error summary}"`
+
+This enables a fresh context to resume exactly where work left off.
 
 ### Step 6: Handoff
 
