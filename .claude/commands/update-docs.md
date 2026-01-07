@@ -1,136 +1,60 @@
 ---
 description: Update VISION.md, ARCHITECTURE.md, and ROADMAP.md based on recent changes
+allowed-tools: Read, Edit
 ---
 
 # Update Docs
 
-**Mission**: Sync canonical documents with reality. Use current context knowledge to update vision, architecture, and roadmap.
+Sync canonical documents with reality based on current context knowledge.
 
----
+## Current State
 
-## When to Use
+- State: @.state.json
 
-Run this command when:
-- A feature implementation revealed new insights
-- Technical decisions changed during build
-- Scope shifted based on what you learned
-- Features were added, removed, or modified
-- Architecture evolved during implementation
+## Current Docs (read based on mode from state)
 
----
+**Greenfield:** @VISION.md @ARCHITECTURE.md @ROADMAP.md
+
+**Enhancer:** Read from `.enhancer/` path
 
 ## Process
 
-### Step 1: Assess Current Context
+### 1. Identify Drift
 
-Review what you know from recent work:
-- What features were just built or modified?
-- What technical decisions were made?
+Compare docs to what you know from recent work:
 - What changed from the original plan?
-- What new insights emerged?
+- What technical decisions were made?
+- What features were added/removed/modified?
 
-```
-🔍 Context Assessment
+### 2. Propose Updates
 
-Recent work in context:
-- {What was just done}
-- {Key decisions made}
-- {Surprises or pivots}
-```
-
-### Step 2: Read Current Docs
-
-Read the canonical documents based on mode:
-
-**Greenfield:**
-- `VISION.md`
-- `ARCHITECTURE.md`
-- `ROADMAP.md`
-
-**Enhancer:**
-- `.enhancer/VISION.md`
-- `.enhancer/ARCHITECTURE.md`
-- `.enhancer/ROADMAP.md`
-
-### Step 3: Identify Drift
-
-Compare current docs to reality:
-
-```
-📊 Drift Analysis
-
-VISION.md:
-- [ ] Problem statement still accurate?
-- [ ] Features list current?
-- [ ] Monetization unchanged?
-- [ ] Scope boundaries still valid?
-
-ARCHITECTURE.md:
-- [ ] Tech stack as documented?
-- [ ] Data model current?
-- [ ] API surface accurate?
-- [ ] Payments architecture unchanged?
-
-ROADMAP.md:
-- [ ] Feature statuses current?
-- [ ] Dependencies still accurate?
-- [ ] Phase groupings still make sense?
-- [ ] Next steps correct?
-```
-
-### Step 4: Propose Updates
-
-Present what needs to change:
+Present changes before applying:
 
 ```
 📝 Proposed Updates
 
-VISION.md:
-- {Section}: {Current} → {Proposed}
+VISION.md: {changes}
+ARCHITECTURE.md: {changes}
+ROADMAP.md: {changes}
 
-ARCHITECTURE.md:
-- {Section}: {Current} → {Proposed}
-
-ROADMAP.md:
-- {Feature}: {Old status} → {New status}
-- {Dependency}: {Change}
-
-Approve updates? [Yes / Modify / Skip]
+Approve? [Yes / Modify / Skip]
 ```
 
-### Step 5: Apply Updates
+### 3. Apply Updates
 
-On approval, update each document:
-- Make surgical edits (don't rewrite entire docs)
+On approval:
+- Make surgical edits (don't rewrite)
 - Preserve document structure
-- Add notes for significant changes
-- Update timestamps if present
+- Update `.state.json` if features changed
 
-### Step 6: Update Feature Status
-
-If features changed, also update `.state.json`:
-
-```json
-{
-  "features": {
-    "F1": { "status": "complete" },
-    "F2": { "status": "in_progress" }
-  }
-}
-```
-
-### Step 7: Confirm
+### 4. Confirm
 
 ```
 ✅ Docs Updated
 
-Changes made:
-- VISION.md: {summary of changes}
-- ARCHITECTURE.md: {summary of changes}
-- ROADMAP.md: {summary of changes}
-- .state.json: {if updated}
-
-Canonical docs now reflect current reality.
+- VISION.md: {summary}
+- ARCHITECTURE.md: {summary}
+- ROADMAP.md: {summary}
 ```
 
 ---
