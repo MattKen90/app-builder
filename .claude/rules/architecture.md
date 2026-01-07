@@ -122,6 +122,32 @@ Each phase is a machine in the factory. Input → Process → Output.
 
 ---
 
-### Phase 3: [TBD - Feature Implementation]
+### Phase 3: Feature Implementation (DDD Loop)
+
+**Process:** 6-step Document-Driven Design, one feature at a time.
+
+**Input:**
+- `ROADMAP.md` (which feature to build next)
+- `ARCHITECTURE.md` (how to build it)
+
+**The Loop:**
+```
+For each feature in ROADMAP.md:
+    /ddd:1 → Step 1
+    /ddd:2 → Step 2
+    /ddd:3 → Step 3
+    /ddd:4 → Step 4
+    /ddd:5 → Step 5
+    /ddd:6 → Step 6
+    → Feature complete, move to next
+```
+
+**Output:** Working, tested feature code + feature documentation.
+
+**Feature Sizing:** Each feature ~1 hour through full DDD cycle. Right-sized = independently deployable, visible user value, 1-2 hours implementation.
+
+**Completion Criteria:** All features from ROADMAP.md implemented and working.
+
+---
 
 ### Phase 4: [TBD]
