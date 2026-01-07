@@ -1,3 +1,7 @@
+---
+paths: **/*.py
+---
+
 # Python: Deterministic Only
 
 Claude Code provides all intelligence. Python handles only deterministic operations.
