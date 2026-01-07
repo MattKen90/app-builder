@@ -192,36 +192,49 @@ docs/features/
 
 Different app types require different deployment and testing:
 
-| App Type | Examples |
-|----------|----------|
-| iOS | App Store, TestFlight |
-| Android | Google Play, Firebase |
-| Web App | Vercel, Netlify, AWS |
-| Landing Page | Static hosting |
-| API/Backend | Docker, cloud providers |
+| App Type | CLI Tools to Research |
+|----------|----------------------|
+| iOS | fastlane, xcrun, altool, Transporter CLI |
+| Android | gradle, bundletool, adb, fastlane |
+| Web App | vercel-cli, netlify-cli, aws-cli, fly-cli |
+| Landing Page | gh-pages, surge, firebase-cli |
+| API/Backend | docker, kubectl, flyctl, railway-cli |
 
-**Strategy: Learn Once, Reuse Forever**
+**Philosophy: Automate, Don't Document**
 
-1. **First app of a type**: Build deployment as a feature, create the playbook
-2. **Capture the pattern**: Document in `playbooks/{app-type}/`
-3. **Future apps**: Follow the playbook, refine as needed
+The AI executes deployment via CLI tools and bash commands. Playbooks contain **executable scripts**, not instructions.
+
+**Priority Order:**
+1. **CLI tools first** - Research what's available for Linux/Arch
+2. **Bash automation** - Script the entire deployment process
+3. **AI executes** - Run the deployment, don't tell human to do it
+4. **Document only what can't be automated** - Store credentials, one-time setup
+
+**Strategy: Learn Once, Automate Forever**
+
+1. **First app of a type**: Research CLI tools, build automation scripts, deploy
+2. **Capture the automation**: Store scripts in `playbooks/{app-type}/`
+3. **Future apps**: Run the scripts, refine automation
 
 ```
 playbooks/
 ├── ios/
-│   ├── deployment.md
-│   ├── testing.md
-│   └── store-submission.md
+│   ├── deploy.sh           # Automated deployment script
+│   ├── test.sh             # Automated testing script
+│   ├── setup-once.md       # One-time setup (credentials, certs)
+│   └── troubleshooting.md  # When automation fails
 ├── android/
 ├── web-app/
 └── landing-page/
 ```
 
 **In ROADMAP.md**: Include deployment as a feature (e.g., "F-DEPLOY: Deploy to App Store").
-- First time = build the playbook while deploying
-- Future = follow existing playbook
+- First time = research CLI tools, build scripts, execute deployment
+- Future = run existing scripts
 
-The factory gets smarter with each app type you ship.
+**Research First**: Before any deployment, search for CLI tools packaged for Arch Linux or available via AUR. Prefer tools that run natively on Linux over those requiring macOS.
+
+The factory gets smarter and more automated with each app type you ship.
 
 ---
 
