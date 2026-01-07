@@ -16,6 +16,7 @@ argument-hint: <key> <value> (e.g., mode greenfield)
 ```json
 {
   "mode": "greenfield",
+  "target": null,
   "app": {
     "name": null,
     "initialized": null,
@@ -32,9 +33,14 @@ argument-hint: <key> <value> (e.g., mode greenfield)
 
 **On context load/reload**, Claude reads this file to understand:
 - Current mode (greenfield/enhancer)
+- Target path (where the app lives)
 - Current phase (0-3)
 - All features and their status
 - Current DDD position (which feature, which step)
+
+**Target behavior:**
+- `null` or `"./app/"` → Greenfield, build locally in `app/`
+- `/absolute/path/to/app` → Enhancer, operate on external codebase
 
 ---
 
@@ -79,6 +85,7 @@ DDD:
 
 **Valid top-level keys:**
 - `mode`: Project mode (`greenfield` | `enhancer`)
+- `target`: Path to target app (absolute path or `./app/` for local)
 - `app.name`: Application name
 - `app.phase`: Current phase (0-3)
 
@@ -88,6 +95,10 @@ DDD:
 
 **For `mode`:**
 - Valid: `greenfield`, `enhancer`
+
+**For `target`:**
+- Valid: absolute path (must exist) or `./app/` for local greenfield
+- Verify path exists before accepting
 
 **For `app.phase`:**
 - Valid: `0`, `1`, `2`, `3`
@@ -172,6 +183,11 @@ For dot notation keys like `app.name`, update nested value.
 **Set mode:**
 ```
 /set-state mode enhancer
+```
+
+**Set target (for enhancer mode):**
+```
+/set-state target /home/neo/dev/my-existing-app
 ```
 
 **Set app name:**

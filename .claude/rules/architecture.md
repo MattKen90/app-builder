@@ -83,6 +83,7 @@ project-root/
 ```json
 {
   "mode": "greenfield",
+  "target": null,
   "app": {
     "name": "MyApp",
     "initialized": "2024-01-15T10:00:00Z",
@@ -102,8 +103,15 @@ project-root/
 
 On context load/reload, Claude reads this file and instantly knows:
 - Current mode and phase
+- **Target path** (where app code lives)
 - All features and their status
 - Current DDD position
+
+**Target behavior:**
+- Greenfield: `target: null` or `target: "./app/"` → Build locally
+- Enhancer: `target: "/path/to/existing-app"` → Operate on external codebase
+
+App Builder stays as control center. Target tells it where to work.
 
 ---
 
