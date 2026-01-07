@@ -188,4 +188,41 @@ docs/features/
 
 ---
 
+## Deployment Patterns (Build as You Go)
+
+Different app types require different deployment and testing:
+
+| App Type | Examples |
+|----------|----------|
+| iOS | App Store, TestFlight |
+| Android | Google Play, Firebase |
+| Web App | Vercel, Netlify, AWS |
+| Landing Page | Static hosting |
+| API/Backend | Docker, cloud providers |
+
+**Strategy: Learn Once, Reuse Forever**
+
+1. **First app of a type**: Build deployment as a feature, create the playbook
+2. **Capture the pattern**: Document in `playbooks/{app-type}/`
+3. **Future apps**: Follow the playbook, refine as needed
+
+```
+playbooks/
+├── ios/
+│   ├── deployment.md
+│   ├── testing.md
+│   └── store-submission.md
+├── android/
+├── web-app/
+└── landing-page/
+```
+
+**In ROADMAP.md**: Include deployment as a feature (e.g., "F-DEPLOY: Deploy to App Store").
+- First time = build the playbook while deploying
+- Future = follow existing playbook
+
+The factory gets smarter with each app type you ship.
+
+---
+
 ### Phase 4: [TBD]
