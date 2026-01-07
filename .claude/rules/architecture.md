@@ -260,7 +260,3 @@ playbooks/
 **Research First**: Before any deployment, search for CLI tools packaged for Arch Linux or available via AUR. Prefer tools that run natively on Linux over those requiring macOS.
 
 The factory gets smarter and more automated with each app type you ship.
-
----
-
-### Phase 4: [TBD]
