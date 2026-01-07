@@ -59,7 +59,7 @@ AI analyzes your existing app to understand:
 - What patterns to follow
 - Where monetization gaps exist
 
-**Output:** `DISCOVERY.md` — a complete map of your codebase
+**Output:** `.enhancer/DISCOVERY.md` — a complete map of your codebase
 
 ---
 
@@ -91,13 +91,17 @@ AI takes your vision and designs:
 
 ### Phase 3: Build
 
-AI builds each feature using a 5-step cycle:
+AI builds each feature using a 5-step DDD cycle:
 
-1. **Understand** — AI creates detailed spec, you approve
-2. **Document** — AI writes user docs before building
-3. **Plan** — AI breaks feature into buildable phases
-4. **Implement** — AI writes code, tests at each step
-5. **Review** — AI verifies everything works, finalizes docs
+| Step | Command | What Happens |
+|------|---------|--------------|
+| 1. Understand | `/ddd/1` | AI presents spec, you refine together until approved |
+| 2. Document | `/ddd/2` | AI writes user docs before building |
+| 3. Plan | `/ddd/3` | AI breaks feature into buildable phases |
+| 4. Implement | `/ddd/4` | AI writes code, tests at each checkpoint |
+| 5. Review | `/ddd/5` | AI verifies everything works, finalizes docs |
+
+**Step 1 includes a refinement loop** — AI presents the feature spec, asks clarifying questions, and loops with you until you explicitly approve. No building happens until you're satisfied.
 
 Repeat for each feature until your app is complete.
 
@@ -105,16 +109,40 @@ Repeat for each feature until your app is complete.
 
 ## Commands Reference
 
+### Core Commands
+
 | Command | What It Does |
 |---------|--------------|
 | `/set-state mode greenfield` | Start a new app from scratch |
 | `/set-state mode enhancer` | Enhance an existing app |
 | `/set-state target /path` | Point to existing app (enhancer mode) |
+| `/set-state` | View current project state |
+
+### Phase Commands
+
+| Command | What It Does |
+|---------|--------------|
 | `/phases/0` | Discover existing codebase (enhancer only) |
 | `/phases/1` | Create product vision |
 | `/phases/2` | Design architecture and roadmap |
-| `/phases/3` | Build features |
-| `/set-state` | View current project state |
+| `/phases/3` | Build features (starts DDD cycle) |
+
+### DDD Commands (Direct Access)
+
+| Command | What It Does |
+|---------|--------------|
+| `/ddd/1` | Understand & approve feature spec |
+| `/ddd/2` | Create documentation draft |
+| `/ddd/3` | Break down implementation plan |
+| `/ddd/4` | Implement the feature |
+| `/ddd/5` | Review and finalize |
+
+### Utility Commands
+
+| Command | What It Does |
+|---------|--------------|
+| `/update-docs` | Sync VISION, ARCHITECTURE, ROADMAP with reality |
+| `/create-new-feature` | Add a new feature (mini Phase 1+2 cycle) |
 
 ---
 
@@ -124,19 +152,51 @@ When you build with App Builder, here's what gets created:
 
 ```
 your-project/
-├── VISION.md           ← What you're building
-├── ARCHITECTURE.md     ← How it's designed
-├── ROADMAP.md          ← Build sequence
+├── .state.json          ← Current state (auto-loaded on context start)
+├── VISION.md            ← What you're building
+├── ARCHITECTURE.md      ← How it's designed
+├── ROADMAP.md           ← Build sequence
 │
-├── app/                ← Your app's code lives here
+├── app/                 ← Your app's code lives here
 │   ├── src/
 │   ├── public/
 │   └── ...
 │
-├── docs/features/      ← Documentation for each feature
+├── docs/features/       ← Documentation for each feature
+├── .ddd_workspaces/     ← Working files during build (archived after)
 │
-└── .claude/            ← App Builder's brain (don't touch)
+└── .claude/             ← App Builder's brain
+    ├── commands/        ← Slash commands
+    ├── rules/           ← Behavior rules
+    └── skills/          ← Specialized capabilities
 ```
+
+### Enhancer Mode Structure
+
+Enhancement work is isolated in `.enhancer/`:
+
+```
+your-project/
+├── .enhancer/
+│   ├── DISCOVERY.md     ← Analysis of existing codebase
+│   ├── VISION.md        ← Enhancement specs
+│   ├── ARCHITECTURE.md  ← How enhancements fit
+│   ├── ROADMAP.md       ← Enhancement sequence
+│   └── workspaces/      ← DDD working files
+```
+
+---
+
+## State & Context Resume
+
+App Builder tracks progress in `.state.json`. If your session ends mid-build, a fresh context automatically loads state and knows:
+
+- Which mode you're in (greenfield/enhancer)
+- Which feature you're building
+- Which DDD step you're on
+- What you were last working on
+
+Just pick up where you left off.
 
 ---
 
@@ -156,6 +216,8 @@ That's it. No coding required.
 
 **Trust the process.** AI will ask questions that seem basic. Answer them anyway.
 
+**Refine before approving.** In DDD Step 1, take time to adjust the spec. It's easier to change words than code.
+
 **Approve in stages.** Don't try to perfect everything upfront. Approve phase by phase.
 
 **MRR first.** When AI asks about monetization, have an answer. Free apps don't pay bills.
@@ -170,7 +232,7 @@ That's it. No coding required.
 No. AI handles all technical implementation.
 
 **What if I don't like what AI proposes?**
-Say "not quite" and explain what's off. AI will adjust.
+Say "not quite" and explain what's off. AI will adjust. In DDD Step 1, there's a dedicated refinement loop for this.
 
 **Can I enhance an app I didn't build?**
 Yes. Enhancer mode analyzes any codebase and proposes improvements.
@@ -179,7 +241,10 @@ Yes. Enhancer mode analyzes any codebase and proposes improvements.
 Stripe. It's the default for all monetization.
 
 **How long does it take to build an app?**
-Depends on complexity. Each feature takes roughly 1 hour through the build cycle.
+Depends on complexity. Each feature takes roughly 1 hour through the DDD cycle.
+
+**What if my context/session ends mid-build?**
+State is saved in `.state.json` and auto-loaded on next session. You'll resume right where you left off.
 
 ---
 
