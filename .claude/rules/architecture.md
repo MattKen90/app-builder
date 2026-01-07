@@ -30,6 +30,34 @@ All commands read `.state.json` and adapt behavior accordingly.
 
 ---
 
+## Project Structure
+
+Clear separation between App Builder infrastructure and the app being built.
+
+```
+project-root/
+├── .claude/                    # Builder infrastructure (DO NOT MIX)
+├── .state.json                 # Builder state
+├── .ddd_workspaces/            # DDD working directories
+├── CLAUDE.md                   # Builder operations
+│
+├── VISION.md                   # Phase 1 output (root, prominent)
+├── ARCHITECTURE.md             # Phase 2 output (root, prominent)
+├── ROADMAP.md                  # Phase 2 output (root, prominent)
+│
+├── docs/features/              # Feature docs (DDD Step 5)
+│
+└── app/                        # THE APP BEING BUILT
+    ├── src/
+    ├── public/
+    ├── package.json
+    └── ...
+```
+
+**Key Rule:** All app code goes in `app/`. Never mix with builder infrastructure.
+
+---
+
 ## State Management
 
 **Single source of truth:** `.state.json` at project root.
@@ -287,6 +315,7 @@ For each feature in ROADMAP.md:
 | Roadmap | `ROADMAP.md` | `.enhancer/ROADMAP.md` |
 | Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
 | Feature docs | `docs/features/` | `.enhancer/docs/features/` |
+| App code | `app/` | (existing codebase) |
 | Feature IDs | F1, F2, F3 | E-F1, E-F2, E-F3 |
 
 ---
