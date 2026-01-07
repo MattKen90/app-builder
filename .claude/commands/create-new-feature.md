@@ -1,7 +1,7 @@
 ---
 description: Add a new feature with rigorous spec clarification (mini Phase 1+2 cycle)
 allowed-tools: Read, Edit, Write, WebSearch
-argument-hint: <feature description>
+argument-hint: [feature description]
 ---
 
 # Create New Feature
