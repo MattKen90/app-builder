@@ -150,4 +150,24 @@ For each feature in ROADMAP.md:
 
 ---
 
+## Feature Documentation
+
+One doc per feature. No subfolders. No sprawl.
+
+```
+docs/features/
+├── F1-user-authentication.md
+├── F2-dashboard.md
+├── F3-data-export.md
+└── ...
+```
+
+**Created during:** DDD Step 5 (Review) — after code is done and tested.
+
+**Naming:** `{feature-id}-{feature-name}.md`
+
+**Rule:** If a feature needs multiple docs, the feature is too big. Go back and split it.
+
+---
+
 ### Phase 4: [TBD]
