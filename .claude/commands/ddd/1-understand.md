@@ -223,12 +223,12 @@ Checked for:
 Proceeding to summary...
 ```
 
-### Step 5: Present Executive Summary
+### Step 5: Present Feature Spec
 
-Generate concise summary (200-300 words):
+Present the full feature spec from ROADMAP.md and ARCHITECTURE.md:
 
 ```
-📋 Feature Summary: {Feature ID} - {Feature Name}
+📋 Feature Spec: {Feature ID} - {Feature Name}
 
 ## What We're Building
 {2-3 sentences: Plain language description of what this feature does}
@@ -236,34 +236,111 @@ Generate concise summary (200-300 words):
 ## Why It Matters
 {2-3 sentences: Value delivered, problems solved}
 
+## User Story
+As a {user type}, I want to {action} so that {benefit}.
+
+## Acceptance Criteria
+- [ ] {criterion 1}
+- [ ] {criterion 2}
+- [ ] {criterion 3}
+
 ## Technical Approach
 - {Key technical decision 1}
 - {Key technical decision 2}
 - {Key technical decision 3}
 
 ## Scope
-- In: {what's included}
-- Out: {what's explicitly not included}
+- **In**: {what's included}
+- **Out**: {what's explicitly not included}
+
+## Tier
+{🆓 Free | 💰 Paid | 🏢 Enterprise} - {why this tier}
 
 ## Dependencies
 - Requires: {features that must be done first}
 - Enables: {future features this unlocks}
+```
+
+### Step 6: Refinement Loop
+
+**Do NOT proceed until user explicitly approves.**
+
+After presenting the spec, enter a refinement loop:
+
+```
+🔄 Let's refine this spec together.
+
+I have a few questions to confirm this is right:
+
+1. **Scope**: Is the In/Out scope correct? Anything to add or remove?
+
+2. **Acceptance Criteria**: Do these criteria capture what "done" means to you?
+
+3. **Technical Approach**: Any concerns about how we're building this?
+
+4. **User Story**: Does this capture the real user need?
 
 ---
 
-Questions to consider:
-- Does this match your expectations?
-- Any concerns about the approach?
-- Ready to proceed?
+What would you like to adjust? (Or say "looks good" to proceed)
 ```
 
-### Step 6: Q&A (If Needed)
+**Refinement Process:**
 
-If user has questions:
-- Answer based on spec, ARCHITECTURE.md, ROADMAP.md
-- Reference specific sections
-- If user requests changes, update FEATURE_SPEC.md
-- Document any modifications made
+1. **Wait for user response** - Do not proceed without explicit input
+
+2. **If user suggests changes:**
+   - Acknowledge the change
+   - Update FEATURE_SPEC.md
+   - Re-present the changed section
+   - Ask: "Is this better? Anything else to adjust?"
+   - **Loop until user is satisfied**
+
+3. **If user asks questions:**
+   - Answer based on spec, ARCHITECTURE.md, ROADMAP.md
+   - Reference specific sections
+   - Ask if the answer addresses their concern
+
+4. **Track all modifications:**
+   ```
+   📝 Changes Made:
+   - {change 1}: {old} → {new}
+   - {change 2}: {old} → {new}
+   ```
+
+5. **Only exit loop when user explicitly approves:**
+   - "looks good"
+   - "approved"
+   - "let's proceed"
+   - Or similar affirmative
+
+**Example refinement exchange:**
+
+```
+User: "I think we should also include CSV export, not just JSON"
+
+AI: Got it. I'll add CSV export to the scope.
+
+Updated Scope:
+- **In**: JSON export, CSV export, date range filtering
+- **Out**: PDF export, scheduled exports
+
+Is this better? Anything else to adjust?
+```
+
+```
+User: "The acceptance criteria should include error handling for large files"
+
+AI: Good catch. Adding that criterion.
+
+Updated Acceptance Criteria:
+- [ ] User can export data in JSON format
+- [ ] User can export data in CSV format
+- [ ] Export handles files up to 100MB gracefully
+- [ ] Clear error message shown if export fails
+
+Better? Anything else?
+```
 
 ### Step 7: Update State
 
@@ -299,9 +376,14 @@ Once user approves, update `.state.json`:
 **Workspace**: .ddd_workspaces/{workspace}/
 **Spec**: FEATURE_SPEC.md
 
+{If changes were made during refinement:}
+📝 Refinements Made:
+- {change 1}
+- {change 2}
+
 Ready for Step 2: Document
 
-Run: /ddd:2
+Run: /ddd/2
 ```
 
 ---
