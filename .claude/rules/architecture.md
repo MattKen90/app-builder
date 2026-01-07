@@ -142,7 +142,32 @@ Each phase is a machine in the factory. Input → Process → Output.
 
 ### Phase 3: Feature Implementation (DDD Loop)
 
-**Process:** 6-step Document-Driven Design, one feature at a time.
+**Process:** 5-step Document-Driven Design, one feature at a time.
+
+**Document Flow:**
+```
+Step 1: Understand
+  Read:  ROADMAP.md, ARCHITECTURE.md
+  Write: .ddd_workspaces/{feature}/FEATURE_SPEC.md
+         ↓
+Step 2: Document
+  Read:  FEATURE_SPEC.md
+  Write: .ddd_workspaces/{feature}/DOCS_DRAFT.md
+         ↓
+Step 3: Code-Breakdown
+  Read:  FEATURE_SPEC.md, DOCS_DRAFT.md
+  Write: .ddd_workspaces/{feature}/IMPLEMENTATION_PLAN.md
+         ↓
+Step 4: Implement
+  Read:  IMPLEMENTATION_PLAN.md + all specs
+  Write: Code, Tests, .ddd_workspaces/{feature}/PROGRESS.md
+         ↓
+Step 5: Review
+  Read:  All workspace artifacts
+  Write: docs/features/{feature-id}-{feature-name}.md
+```
+
+All workspace files live in `.ddd_workspaces/{feature-id}-{feature-name}/`. Each step knows where to read and write.
 
 **Input:**
 - `ROADMAP.md` (which feature to build next)

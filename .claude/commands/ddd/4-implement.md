@@ -411,10 +411,43 @@ Which approach?
 
 ### Testing Strategy
 
-- Test each deliverable as you build it
-- Focus on behavior, not implementation
-- Cover happy path first, then edge cases
-- Tests should be fast and reliable
+**When to Write Tests:**
+- Write tests DURING implementation, not after
+- Each phase deliverable should have corresponding tests
+- Tests are part of the deliverable, not separate work
+
+**What to Test:**
+
+| Layer | What | How |
+|-------|------|-----|
+| Unit | Individual functions, components | Fast, isolated, mock dependencies |
+| Integration | Components working together | Test real interactions |
+| E2E (if applicable) | Full user flows | Simulate actual usage |
+
+**Coverage Expectations:**
+- Unit tests: Every function with logic (not just getters/setters)
+- Integration: Key user flows and data paths
+- E2E: Critical happy paths only (expensive to maintain)
+
+**Testing Principles:**
+- Test behavior, not implementation details
+- Happy path first, then error cases, then edge cases
+- Tests must be fast and reliable (no flaky tests)
+- If you can't test it, the code might need refactoring
+
+**Per Phase:**
+1. Write tests for phase deliverables
+2. Run tests - must pass before checkpoint
+3. Run ALL tests (regression) before moving to next phase
+
+**Test Commands** (define in IMPLEMENTATION_PLAN.md):
+```bash
+# Phase tests
+{test command for this phase}
+
+# Full test suite
+{command to run all tests}
+```
 
 ### Commit Strategy
 
