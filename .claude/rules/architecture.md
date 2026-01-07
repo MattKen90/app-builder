@@ -2,6 +2,8 @@
 
 ## First Principles
 
+**MRR is King.** Everything exists to generate Monthly Recurring Revenue.
+
 **Human = Operator.** Minimal involvement. Provides intent, approves direction.
 
 **AI = Driver.** Full ownership of product vision, feature selection, research, and implementation.
@@ -15,6 +17,47 @@ Traditional: Human designs, AI assists.
 App Builder: **AI designs, human approves.**
 
 The human's role is to say "yes" or "not quite" — not to architect.
+
+---
+
+## Two Modes
+
+**Greenfield Mode:** Build new apps from scratch.
+
+**Enhancer Mode:** Enhance existing apps with a segregated beachhead.
+
+All commands read `.state.json` and adapt behavior accordingly.
+
+---
+
+## State Management
+
+**Single source of truth:** `.state.json` at project root.
+
+```json
+{
+  "mode": "greenfield",
+  "app": {
+    "name": "MyApp",
+    "initialized": "2024-01-15T10:00:00Z",
+    "phase": 2
+  },
+  "features": {
+    "F1": { "name": "User Auth", "status": "complete" },
+    "F2": { "name": "Dashboard", "status": "in_progress" }
+  },
+  "ddd": {
+    "feature": "F2",
+    "step": 3,
+    "workspace": ".ddd_workspaces/F2-dashboard/"
+  }
+}
+```
+
+On context load/reload, Claude reads this file and instantly knows:
+- Current mode and phase
+- All features and their status
+- Current DDD position
 
 ---
 
@@ -43,153 +86,208 @@ Documents are the persistent artifacts. Agents are temporary workers that read i
 Each phase is a machine in the factory. Input → Process → Output.
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        APP BUILDER FACTORY                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  [Human Idea] ──→ ┌───────────────┐ ──→ [VISION.md]             │
-│                   │ Phase 1       │     (features, scope)        │
-│                   │ Vision Synth  │                              │
-│                   └───────────────┘                              │
-│                          │                                       │
-│                          ▼                                       │
-│  [VISION.md] ────→ ┌───────────────┐ ──→ [ARCHITECTURE.md]      │
-│                    │ Phase 2       │     (tech stack, design)    │
-│                    │ Tech Found.   │ ──→ [ROADMAP.md]            │
-│                    └───────────────┘     (build sequence)        │
-│                          │                                       │
-│                          ▼                                       │
-│  [ROADMAP.md] ───→ ┌───────────────┐ ──→ [Feature Code]         │
-│  [ARCH.md]         │ Phase 3       │     (working features)      │
-│                    │ Build         │                              │
-│                    └───────────────┘                              │
-│                          │                                       │
-│                          ▼                                       │
-│                    [Working App]                                 │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────┐
+│                        APP BUILDER FACTORY                          │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │ ENHANCER MODE ONLY                                          │   │
+│  │                                                             │   │
+│  │ [Existing Code] ──→ ┌───────────────┐ ──→ [DISCOVERY.md]   │   │
+│  │                     │ Phase 0       │     (what exists)     │   │
+│  │                     │ Discovery     │                       │   │
+│  │                     └───────────────┘                       │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│                          │                                          │
+│                          ▼                                          │
+│  [Human Idea] ──→ ┌───────────────┐ ──→ [VISION.md]                │
+│  (or DISCOVERY)   │ Phase 1       │     (features, scope,          │
+│                   │ Vision        │      monetization)              │
+│                   └───────────────┘                                 │
+│                          │                                          │
+│                          ▼                                          │
+│  [VISION.md] ────→ ┌───────────────┐ ──→ [ARCHITECTURE.md]         │
+│                    │ Phase 2       │     (tech stack, design)       │
+│                    │ Technical     │ ──→ [ROADMAP.md]               │
+│                    │ Foundation    │     (build sequence)           │
+│                    └───────────────┘                                │
+│                          │                                          │
+│                          ▼                                          │
+│  [ROADMAP.md] ───→ ┌───────────────┐ ──→ [Feature Code]            │
+│  [ARCH.md]         │ Phase 3       │     (working features)         │
+│                    │ Build (DDD)   │                                │
+│                    └───────────────┘                                │
+│                          │                                          │
+│                          ▼                                          │
+│                    [Working App]                                    │
+│                    [Making Money]                                   │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## Phases
 
+### Phase 0: Discovery (Enhancer Mode Only)
+
+**Command:** `/phases/0`
+
+**Agent:** `discovery-architect`
+
+**Input:** Existing codebase to enhance.
+
+**Process:**
+1. **SCAN**: Automated analysis of tech stack, structure, Claude Code setup
+2. **ANALYZE**: Deep dive on data model, API surface, monetization status
+3. **SYNTHESIZE**: Produce discovery document
+
+**Output:** `.enhancer/DISCOVERY.md` — Complete map of existing codebase.
+
+**Human role:** Confirm findings, clarify any ambiguities.
+
+**AI role:** Thoroughly analyze the codebase, document patterns to follow, identify enhancement opportunities.
+
+**Completion Criteria:** DISCOVERY.md exists with tech stack, patterns, and monetization assessment.
+
+---
+
 ### Phase 1: Vision Synthesis
+
+**Command:** `/phases/1`
 
 **Agent:** `vision-architect`
 
-**Input:** Human's rough idea, proposal document, or general concept.
+**Input:**
+- Greenfield: Human's rough idea
+- Enhancer: DISCOVERY.md + enhancement goals
 
 **Process (Multi-Round, Interactive):**
 
 1. **EXTRACT** (3 rounds of Q&A):
    - Round 1: Foundation (Problem & Users)
-   - Round 2: Vision & Workflow (What Success Looks Like)
-   - Round 3: Constraints & Priorities (Boundaries)
+   - Round 2: Vision & Workflow & Monetization
+   - Round 3: Constraints & Priorities
    - *Summarize after each round. Confirm understanding.*
 
 2. **EXPAND** (Research → Discover → Propose):
-   - Deep research: competitors, cutting-edge tech, user pain points
-   - Synthesize discoveries into categories
-   - **Present findings to human** — "Here's what I found. Which of these do you want?"
+   - Deep research: competitors, cutting-edge tech, pricing models
+   - **Present findings to human** — including monetization recommendations
    - *Wait for human to approve/reject discoveries*
 
-3. **SCOPE**: Define in/out boundaries for v1
+3. **SCOPE**: Define in/out boundaries for v1, assign feature tiers (Free/Paid/Enterprise)
 
-4. **SYNTHESIZE**: Produce canonical document
+4. **SYNTHESIZE**: Produce canonical document with monetization section
 
-**Output:** `VISION.md` — The bible of the app. What we're building, for whom, why, and what's in scope.
+**Output:**
+- Greenfield: `VISION.md`
+- Enhancer: `.enhancer/VISION.md`
 
-**Human role:** Answer questions across rounds, review research discoveries, approve the final VISION.md.
+**Human role:** Answer questions, review research, approve vision and pricing.
 
-**AI role:** Drive multi-round extraction, research and present mind-expanding possibilities, produce the document.
+**AI role:** Drive extraction, research possibilities, produce document with clear monetization strategy.
 
-**Completion Criteria:** VISION.md exists and is approved.
+**Completion Criteria:** VISION.md exists with features AND monetization section approved.
 
 ---
 
 ### Phase 2: Technical Foundation
 
+**Command:** `/phases/2`
+
 **Agent:** `tech-architect`
 
-**Input:** `VISION.md` (specifically the feature list and technical approach section)
+**Input:** VISION.md (features, scope, monetization model)
 
 **Process (Multi-Round, Interactive):**
 
 1. **RESEARCH** (3 rounds):
-   - Round 1: Requirements analysis + initial research on similar apps
-   - Round 2: Technology options deep dive — **present options with trade-offs**
-   - Round 3: Architecture validation — confirm stack before detailed design
+   - Round 1: Requirements analysis + similar app research
+   - Round 2: Technology options with trade-offs + Stripe integration patterns
+   - Round 3: Architecture validation
    - *Wait for human confirmation at each round*
 
-2. **ARCHITECT**: Design the system based on confirmed stack
+2. **ARCHITECT**: Design system including payments infrastructure
 
-3. **SEQUENCE**: Order the features into a buildable roadmap
+3. **SEQUENCE**: Order features with F-PAY (billing) in Phase 1
 
 **Output:**
-- `ARCHITECTURE.md` — Tech stack, system design, database schema, API structure, deployment approach
-- `ROADMAP.md` — Ordered feature build sequence with dependencies mapped
+- `ARCHITECTURE.md` — Tech stack, system design, payments architecture
+- `ROADMAP.md` — Build sequence with billing in first phase
 
-**Human role:** Review research findings, approve technology choices, flag constraints (existing infrastructure, team skills, etc.)
+**Human role:** Review findings, approve technology choices.
 
-**AI role:** Research cutting-edge approaches, **present discoveries for approval**, design elegant architecture, sequence the build optimally.
+**AI role:** Research approaches, design architecture, ensure payments infrastructure is foundational.
 
-**Completion Criteria:** ARCHITECTURE.md and ROADMAP.md exist and are approved.
+**Completion Criteria:** ARCHITECTURE.md and ROADMAP.md exist with payments architecture defined.
 
-**Key Principle:** Don't just pick "safe" technologies. Research what's actually best for THIS app. **Present cutting-edge discoveries** — let the human see what's possible and choose. The architecture should exceed what the human would have designed alone.
+**Key Principle:** Payments infrastructure (Stripe) goes in Phase 1 of the roadmap. MRR is King.
 
 ---
 
 ### Phase 3: Feature Implementation (DDD Loop)
 
+**Command:** `/phases/3` (orchestrator) or `/ddd/1` through `/ddd/5` (direct)
+
 **Process:** 5-step Document-Driven Design, one feature at a time.
 
 **Document Flow:**
 ```
-Step 1: Understand
-  Read:  ROADMAP.md, ARCHITECTURE.md
-  Write: .ddd_workspaces/{feature}/FEATURE_SPEC.md
+Step 1: Understand (/ddd/1)
+  Read:  ROADMAP.md, ARCHITECTURE.md, .state.json
+  Write: {workspace}/FEATURE_SPEC.md
          ↓
-Step 2: Document
+Step 2: Document (/ddd/2)
   Read:  FEATURE_SPEC.md
-  Write: .ddd_workspaces/{feature}/DOCS_DRAFT.md
+  Write: {workspace}/DOCS_DRAFT.md
          ↓
-Step 3: Code-Breakdown
+Step 3: Code-Breakdown (/ddd/3)
   Read:  FEATURE_SPEC.md, DOCS_DRAFT.md
-  Write: .ddd_workspaces/{feature}/IMPLEMENTATION_PLAN.md
+  Write: {workspace}/IMPLEMENTATION_PLAN.md
          ↓
-Step 4: Implement
+Step 4: Implement (/ddd/4)
   Read:  IMPLEMENTATION_PLAN.md + all specs
-  Write: Code, Tests, .ddd_workspaces/{feature}/PROGRESS.md
+  Write: Code, Tests, {workspace}/PROGRESS.md
          ↓
-Step 5: Review
+Step 5: Review (/ddd/5)
   Read:  All workspace artifacts
   Write: docs/features/{feature-id}-{feature-name}.md
+  Update: .state.json (feature complete)
 ```
 
-All workspace files live in `.ddd_workspaces/{feature-id}-{feature-name}/`. Each step knows where to read and write.
-
-**Input:**
-- `ROADMAP.md` (which feature to build next)
-- `ARCHITECTURE.md` (how to build it)
+**Workspaces:**
+- Greenfield: `.ddd_workspaces/{feature-id}-{feature-name}/`
+- Enhancer: `.enhancer/workspaces/{feature-id}-{feature-name}/`
 
 **The Loop:**
 ```
 For each feature in ROADMAP.md:
-    /ddd:1 → Step 1
-    /ddd:2 → Step 2
-    /ddd:3 → Step 3
-    /ddd:4 → Step 4
-    /ddd:5 → Step 5
-    /ddd:6 → Step 6
-    → Feature complete, move to next
+    /ddd/1 → Understand & approve spec
+    /ddd/2 → Document before building
+    /ddd/3 → Break into phases
+    /ddd/4 → Build phase by phase
+    /ddd/5 → Review & complete
+    → Update .state.json, move to next feature
 ```
 
-**Output:** Working, tested feature code + feature documentation.
+**Feature Sizing:** Each feature ~1 hour through full DDD cycle.
 
-**Feature Sizing:** Each feature ~1 hour through full DDD cycle. Right-sized = independently deployable, visible user value, 1-2 hours implementation.
+**Enhancer Mode:** Includes regression testing before/after each implementation phase.
 
-**Completion Criteria:** All features from ROADMAP.md implemented and working.
+---
+
+## Path Reference
+
+| Resource | Greenfield | Enhancer |
+|----------|------------|----------|
+| State | `.state.json` | `.state.json` |
+| Discovery | N/A | `.enhancer/DISCOVERY.md` |
+| Vision | `VISION.md` | `.enhancer/VISION.md` |
+| Architecture | `ARCHITECTURE.md` | `.enhancer/ARCHITECTURE.md` |
+| Roadmap | `ROADMAP.md` | `.enhancer/ROADMAP.md` |
+| Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
+| Feature docs | `docs/features/` | `.enhancer/docs/features/` |
+| Feature IDs | F1, F2, F3 | E-F1, E-F2, E-F3 |
 
 ---
 
@@ -200,8 +298,8 @@ One doc per feature. No subfolders. No sprawl.
 ```
 docs/features/
 ├── F1-user-authentication.md
+├── F-PAY-billing-infrastructure.md
 ├── F2-dashboard.md
-├── F3-data-export.md
 └── ...
 ```
 
@@ -209,54 +307,46 @@ docs/features/
 
 **Naming:** `{feature-id}-{feature-name}.md`
 
-**Rule:** If a feature needs multiple docs, the feature is too big. Go back and split it.
+**Rule:** If a feature needs multiple docs, the feature is too big. Split it.
 
 ---
 
-## Deployment Patterns (Build as You Go)
+## Deployment Patterns
 
-Different app types require different deployment and testing:
+Different app types require different deployment:
 
-| App Type | CLI Tools to Research |
-|----------|----------------------|
-| iOS | fastlane, xcrun, altool, Transporter CLI |
-| Android | gradle, bundletool, adb, fastlane |
-| Web App | vercel-cli, netlify-cli, aws-cli, fly-cli |
+| App Type | CLI Tools |
+|----------|-----------|
+| iOS | fastlane, xcrun, altool |
+| Android | gradle, bundletool, fastlane |
+| Web App | vercel-cli, netlify-cli, fly-cli |
 | Landing Page | gh-pages, surge, firebase-cli |
-| API/Backend | docker, kubectl, flyctl, railway-cli |
+| API/Backend | docker, kubectl, flyctl |
 
 **Philosophy: Automate, Don't Document**
-
-The AI executes deployment via CLI tools and bash commands. Playbooks contain **executable scripts**, not instructions.
-
-**Priority Order:**
-1. **CLI tools first** - Research what's available for Linux/Arch
-2. **Bash automation** - Script the entire deployment process
-3. **AI executes** - Run the deployment, don't tell human to do it
-4. **Document only what can't be automated** - Store credentials, one-time setup
-
-**Strategy: Learn Once, Automate Forever**
-
-1. **First app of a type**: Research CLI tools, build automation scripts, deploy
-2. **Capture the automation**: Store scripts in `playbooks/{app-type}/`
-3. **Future apps**: Run the scripts, refine automation
 
 ```
 playbooks/
 ├── ios/
-│   ├── deploy.sh           # Automated deployment script
-│   ├── test.sh             # Automated testing script
-│   ├── setup-once.md       # One-time setup (credentials, certs)
-│   └── troubleshooting.md  # When automation fails
+│   ├── deploy.sh
+│   └── setup-once.md
 ├── android/
 ├── web-app/
 └── landing-page/
 ```
 
-**In ROADMAP.md**: Include deployment as a feature (e.g., "F-DEPLOY: Deploy to App Store").
-- First time = research CLI tools, build scripts, execute deployment
-- Future = run existing scripts
+**In ROADMAP.md**: Include deployment as a feature (e.g., "F-DEPLOY: Deploy to Production").
 
-**Research First**: Before any deployment, search for CLI tools packaged for Arch Linux or available via AUR. Prefer tools that run natively on Linux over those requiring macOS.
+---
 
-The factory gets smarter and more automated with each app type you ship.
+## Command Quick Reference
+
+| Command | Purpose |
+|---------|---------|
+| `/set-state mode <mode>` | Set greenfield or enhancer |
+| `/init` | Initialize project structure |
+| `/phases/0` | Discovery (enhancer only) |
+| `/phases/1` | Vision |
+| `/phases/2` | Technical Foundation |
+| `/phases/3` | Build (DDD orchestrator) |
+| `/ddd/1` - `/ddd/5` | DDD steps (direct access) |
