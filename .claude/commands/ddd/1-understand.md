@@ -81,6 +81,7 @@ Create `FEATURE_SPEC.md` in workspace:
 **Name**: {feature-name}
 **Description**: {description}
 **User Story**: {user story}
+**Tier**: 🆓 Free | 💰 Paid | 🏢 Enterprise
 
 ### Acceptance Criteria
 - [ ] {criterion 1}
@@ -140,6 +141,12 @@ Before presenting to user, analyze the spec for issues:
    - Is this right-sized for ~1 hour DDD cycle?
    - Too large? Flag for splitting.
    - Too small? Flag for combining.
+
+5. **Monetization** (MRR is King)
+   - Is the tier clearly defined? (Free/Paid/Enterprise)
+   - If paid: Does it require feature gating?
+   - If paid: Does it have upgrade triggers?
+   - Does this feature support revenue goals?
 
 **If issues found:**
 ```

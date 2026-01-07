@@ -408,6 +408,12 @@ Before marking complete:
 - [ ] No regressions
 - [ ] Follows architecture patterns
 
+**Monetization (MRR is King):**
+- [ ] Feature tier implemented correctly (Free/Paid/Enterprise)
+- [ ] If paid: Feature gating working
+- [ ] If paid: Upgrade prompts in place
+- [ ] Stripe integration tested (if applicable)
+
 **Documentation:**
 - [ ] Final doc created in docs/features/
 - [ ] Matches actual implementation

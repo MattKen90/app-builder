@@ -1,14 +1,22 @@
 # App Builder
 
-Lightweight, Claude Code-first framework for building complete applications. Zero API costs—subscription only.
+Lightweight, Claude Code-first framework for building monetizable applications. Zero API costs—subscription only.
+
+## Prime Directive
+
+**MRR is King.** Everything we build exists to generate Monthly Recurring Revenue. Not apps for apps' sake. Not beautiful code for beauty's sake. Revenue.
 
 ## Philosophy
 
+**Revenue-First Development.** Every decision—from vision to deployment—asks: "How does this make money?" Monetization isn't an afterthought; it's the foundation.
+
+**MVP, Fully Monetizable.** Ship fast, iterate fast. Not over-engineered perfection—functional products with clear paths to payment. Stripe-ready from day one.
+
 **Human = Operator.** Minimal involvement. Provides intent, approves direction.
 
-**AI = Driver.** Full ownership of product vision, feature selection, research, and implementation.
+**AI = Driver.** Full ownership of product vision, feature selection, research, and implementation. Always considering revenue implications.
 
-**Spec-Driven Design (SDD).** Human specs what they want, AI expands and builds it.
+**Spec-Driven Design (SDD).** Human specs what they want, AI expands and builds it—with monetization baked in.
 
 ## Core Primitives
 
@@ -71,6 +79,7 @@ Use tech-architect agent to produce ARCHITECTURE.md + ROADMAP.md
 ## Rules
 
 See `.claude/rules/` for detailed constraints:
+- **revenue.md** - MRR-first, monetization patterns, paywall strategies
 - **architecture.md** - Full factory model, phases, document flow
 - **development.md** - Agent delegation, zero-BS, regenerate don't patch
 - **python.md** - Deterministic only, no LLM API calls
