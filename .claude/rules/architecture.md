@@ -80,17 +80,29 @@ Each phase is a machine in the factory. Input → Process → Output.
 
 **Input:** Human's rough idea, proposal document, or general concept.
 
-**Process:**
-- EXTRACT: Aggressive Q&A to surface true intent
-- EXPAND: Research competitors, cutting-edge tech, market gaps
-- SCOPE: Define in/out boundaries for v1
-- SYNTHESIZE: Produce canonical document
+**Process (Multi-Round, Interactive):**
+
+1. **EXTRACT** (3 rounds of Q&A):
+   - Round 1: Foundation (Problem & Users)
+   - Round 2: Vision & Workflow (What Success Looks Like)
+   - Round 3: Constraints & Priorities (Boundaries)
+   - *Summarize after each round. Confirm understanding.*
+
+2. **EXPAND** (Research → Discover → Propose):
+   - Deep research: competitors, cutting-edge tech, user pain points
+   - Synthesize discoveries into categories
+   - **Present findings to human** — "Here's what I found. Which of these do you want?"
+   - *Wait for human to approve/reject discoveries*
+
+3. **SCOPE**: Define in/out boundaries for v1
+
+4. **SYNTHESIZE**: Produce canonical document
 
 **Output:** `VISION.md` — The bible of the app. What we're building, for whom, why, and what's in scope.
 
-**Human role:** Answer questions, approve the final VISION.md.
+**Human role:** Answer questions across rounds, review research discoveries, approve the final VISION.md.
 
-**AI role:** Drive extraction, expand beyond human's imagination, produce the document.
+**AI role:** Drive multi-round extraction, research and present mind-expanding possibilities, produce the document.
 
 **Completion Criteria:** VISION.md exists and is approved.
 
@@ -102,23 +114,29 @@ Each phase is a machine in the factory. Input → Process → Output.
 
 **Input:** `VISION.md` (specifically the feature list and technical approach section)
 
-**Process:**
-- RESEARCH: How are apps like this built in the real world? Latest frameworks, patterns, techniques.
-- EVALUATE: Compare technology options against the feature requirements
-- ARCHITECT: Design the system - front-end, back-end, database, integrations
-- SEQUENCE: Order the features into a buildable roadmap
+**Process (Multi-Round, Interactive):**
+
+1. **RESEARCH** (3 rounds):
+   - Round 1: Requirements analysis + initial research on similar apps
+   - Round 2: Technology options deep dive — **present options with trade-offs**
+   - Round 3: Architecture validation — confirm stack before detailed design
+   - *Wait for human confirmation at each round*
+
+2. **ARCHITECT**: Design the system based on confirmed stack
+
+3. **SEQUENCE**: Order the features into a buildable roadmap
 
 **Output:**
 - `ARCHITECTURE.md` — Tech stack, system design, database schema, API structure, deployment approach
 - `ROADMAP.md` — Ordered feature build sequence with dependencies mapped
 
-**Human role:** Approve technical direction, flag any constraints (existing infrastructure, team skills, etc.)
+**Human role:** Review research findings, approve technology choices, flag constraints (existing infrastructure, team skills, etc.)
 
-**AI role:** Research cutting-edge approaches, design elegant architecture, sequence the build optimally.
+**AI role:** Research cutting-edge approaches, **present discoveries for approval**, design elegant architecture, sequence the build optimally.
 
 **Completion Criteria:** ARCHITECTURE.md and ROADMAP.md exist and are approved.
 
-**Key Principle:** Don't just pick "safe" technologies. Research what's actually best for THIS app. Simplicity, robustness, efficiency. The architecture should exceed what the human would have designed alone.
+**Key Principle:** Don't just pick "safe" technologies. Research what's actually best for THIS app. **Present cutting-edge discoveries** — let the human see what's possible and choose. The architecture should exceed what the human would have designed alone.
 
 ---
 
