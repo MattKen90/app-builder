@@ -6,14 +6,29 @@ description: DDD Step 5 - Final review, documentation finalization, and feature 
 
 **Mission**: Final review, finalize documentation, mark feature complete, clean up workspace.
 
-**Input**:
+**Mode-Aware**: Reads `.mode` file to determine paths. In enhancer mode, verifies no regressions in existing functionality.
+
+---
+
+## Mode Detection
+
+| Resource | Greenfield | Enhancer |
+|----------|------------|----------|
+| Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
+| State | `.state/project.json` | `.enhancer/state/project.json` |
+| Docs | `docs/features/` | `.enhancer/docs/features/` |
+| Final check | Tests pass | Tests pass + no regressions |
+
+---
+
+**Input** (paths depend on mode):
 - All workspace artifacts (FEATURE_SPEC.md, DOCS_DRAFT.md, IMPLEMENTATION_PLAN.md, PROGRESS.md)
 - Implemented code
-- `ARCHITECTURE.md`, `ROADMAP.md`
+- `{ARCHITECTURE_PATH}`, `{ROADMAP_PATH}`
 
 **Output**:
-- `docs/features/{feature-id}-{feature-name}.md` (final documentation)
-- Updated `.state/project.json` (feature marked complete)
+- `{DOCS_PATH}/{feature-id}-{feature-name}.md` (final documentation)
+- Updated `{STATE_PATH}` (feature marked complete)
 - Git commit with final changes
 - Clean workspace (optional archive)
 

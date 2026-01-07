@@ -6,12 +6,26 @@ description: DDD Step 2 - Create user-facing documentation before implementation
 
 **Mission**: Create user-facing documentation for the feature BEFORE building it. Document what we're about to build, not what we built.
 
-**Input**:
-- `.ddd_workspaces/{feature}/FEATURE_SPEC.md`
-- `ARCHITECTURE.md` (for technical context)
+**Mode-Aware**: Reads `.mode` file to determine paths.
+
+---
+
+## Mode Detection
+
+| Resource | Greenfield | Enhancer |
+|----------|------------|----------|
+| Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
+| Architecture | `ARCHITECTURE.md` | `.enhancer/ARCHITECTURE.md` |
+| Docs | `docs/features/` | `.enhancer/docs/features/` |
+
+---
+
+**Input** (paths depend on mode):
+- `{WORKSPACE_PATH}/{feature}/FEATURE_SPEC.md`
+- `{ARCHITECTURE_PATH}` (for technical context)
 
 **Output**:
-- `.ddd_workspaces/{feature}/DOCS_DRAFT.md` (draft documentation)
+- `{WORKSPACE_PATH}/{feature}/DOCS_DRAFT.md` (draft documentation)
 - Ready for user review and approval
 
 ---

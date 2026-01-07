@@ -1,13 +1,16 @@
 ---
-description: Phase 0 - Discover and analyze the existing codebase before enhancement
+description: Phase 0 - Discover and analyze the existing codebase before enhancement (enhancer mode only)
 ---
 
-# Enhancer Discovery (Phase 0)
+# Discovery (Phase 0)
 
 **Mission**: Analyze the existing codebase to understand what exists. Produce DISCOVERY.md as the foundation for all enhancement work.
 
+**Mode**: Enhancer only. This command is not used in greenfield mode.
+
 **Prerequisites**:
-- `/enhancer/init` has been run
+- Mode set to `enhancer` (check `.mode` file)
+- `/init` has been run
 - `.enhancer/` beachhead exists
 
 **Input**:
@@ -22,6 +25,27 @@ description: Phase 0 - Discover and analyze the existing codebase before enhance
 
 ## Process
 
+### Step 0: Check Mode
+
+Read `.mode` file:
+
+```
+🔍 Checking mode...
+```
+
+**If mode is greenfield or not set:**
+```
+⚠️ Discovery Not Available
+
+Discovery (Phase 0) is only for enhancer mode.
+Current mode: {greenfield|not set}
+
+Discovery analyzes EXISTING codebases before enhancement.
+For greenfield projects, skip to Phase 1 (Vision).
+
+To switch to enhancer mode: /mode enhancer
+```
+
 ### Step 1: Verify Prerequisites
 
 Check that enhancer is initialized:
@@ -29,6 +53,7 @@ Check that enhancer is initialized:
 ```
 🔍 Checking enhancer setup...
 
+Mode: enhancer ✓
 - .enhancer/ exists: {Yes/No}
 - state/project.json exists: {Yes/No}
 - Current phase: {phase}
@@ -38,7 +63,7 @@ Check that enhancer is initialized:
 ```
 ⚠️ Enhancer Not Initialized
 
-Run /enhancer/init first to set up the beachhead.
+Run /init first to set up the beachhead.
 ```
 
 **If discovery already complete:**

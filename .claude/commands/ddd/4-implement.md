@@ -6,16 +6,33 @@ description: DDD Step 4 - Execute implementation plan phase by phase
 
 **Mission**: Build the feature following the implementation plan. Execute phase by phase with checkpoints.
 
-**Input**:
-- `.ddd_workspaces/{feature}/IMPLEMENTATION_PLAN.md`
-- `.ddd_workspaces/{feature}/FEATURE_SPEC.md`
-- `.ddd_workspaces/{feature}/DOCS_DRAFT.md`
-- `ARCHITECTURE.md`
+**Mode-Aware**: Reads `.mode` file to determine paths. In enhancer mode, includes regression testing to ensure existing functionality isn't broken.
+
+---
+
+## Mode Detection
+
+| Resource | Greenfield | Enhancer |
+|----------|------------|----------|
+| Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
+| Architecture | `ARCHITECTURE.md` | `.enhancer/ARCHITECTURE.md` |
+| Testing | New tests | New tests + regression tests |
+| Patterns | Define new | Follow existing (from DISCOVERY.md) |
+
+---
+
+**Input** (paths depend on mode):
+- `{WORKSPACE_PATH}/{feature}/IMPLEMENTATION_PLAN.md`
+- `{WORKSPACE_PATH}/{feature}/FEATURE_SPEC.md`
+- `{WORKSPACE_PATH}/{feature}/DOCS_DRAFT.md`
+- `{ARCHITECTURE_PATH}`
 
 **Output**:
 - Working code (in appropriate project locations)
 - Tests (passing)
-- `.ddd_workspaces/{feature}/PROGRESS.md`
+- `{WORKSPACE_PATH}/{feature}/PROGRESS.md`
+
+**Enhancer Mode Critical**: Run existing test suite before AND after each phase to catch regressions.
 
 ---
 

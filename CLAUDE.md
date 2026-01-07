@@ -4,9 +4,11 @@ Lightweight, Claude Code-first framework for building and enhancing monetizable 
 
 ## Two Modes
 
-**Greenfield Mode**: Build new apps from scratch. Clone this repo and start building.
+**Greenfield Mode**: Build new apps from scratch.
 
-**Enhancer Mode**: Enhance existing apps. Install the enhancer beachhead into any repo.
+**Enhancer Mode**: Enhance existing apps with a segregated beachhead.
+
+All commands are mode-aware—set the mode once, and everything adapts.
 
 ## Prime Directive
 
@@ -22,132 +24,111 @@ Lightweight, Claude Code-first framework for building and enhancing monetizable 
 
 **AI = Driver.** Full ownership of product vision, feature selection, research, and implementation. Always considering revenue implications.
 
-**Spec-Driven Design (SDD).** Human specs what they want, AI expands and builds it—with monetization baked in.
-
-## Core Primitives
-
-- **Slash Commands** (`.claude/commands/`) - DDD workflow automation
-- **Agents** (`.claude/agents/`) - Specialized task delegation
-- **Rules** (`.claude/rules/`) - Architecture, development, and Python constraints
-- **State** (`.state/`) - Project tracking and metrics
-
 ## Project Structure
 
 ```
 app-builder/
 ├── CLAUDE.md                    # This file
+├── .mode                        # Current mode (greenfield/enhancer)
 ├── .claude/
-│   ├── rules/                   # Constraints and architecture
-│   │   ├── revenue.md           # MRR-first, monetization
-│   │   ├── architecture.md      # Factory phases, DDD process
-│   │   ├── development.md       # Development rules
-│   │   └── python.md            # Python: deterministic only
-│   ├── agents/
-│   │   ├── vision-architect.md  # Phase 1: Vision synthesis
-│   │   ├── tech-architect.md    # Phase 2: Technical foundation
-│   │   └── discovery-architect.md # Phase 0: Discovery (enhancer)
-│   └── commands/
-│       ├── ddd/                 # Greenfield DDD commands
-│       │   ├── 1-understand.md
-│       │   ├── 2-document.md
-│       │   ├── 3-code-breakdown.md
-│       │   ├── 4-implement.md
-│       │   └── 5-review.md
-│       └── enhancer/            # Enhancer mode commands
-│           ├── init.md          # Initialize beachhead
-│           ├── discovery.md     # Phase 0: Analyze codebase
-│           └── ddd/             # Enhancement DDD commands
-│               ├── 1-understand.md
-│               ├── 2-document.md
-│               ├── 3-code-breakdown.md
-│               ├── 4-implement.md
-│               └── 5-review.md
+│   ├── rules/                   # Shared rules (both modes)
+│   │   ├── revenue.md
+│   │   ├── architecture.md
+│   │   ├── development.md
+│   │   └── python.md
+│   ├── agents/                  # Shared agents
+│   │   ├── vision-architect.md  # Phase 1
+│   │   ├── tech-architect.md    # Phase 2
+│   │   └── discovery-architect.md # Phase 0 (enhancer only)
+│   └── commands/                # Smart commands (mode-aware)
+│       ├── mode.md              # /mode - set greenfield or enhancer
+│       ├── init.md              # /init - initialize based on mode
+│       ├── discovery.md         # /discovery - Phase 0 (enhancer only)
+│       └── ddd/                 # Single DDD set (adapts to mode)
+│           ├── 1-understand.md
+│           ├── 2-document.md
+│           ├── 3-code-breakdown.md
+│           ├── 4-implement.md
+│           └── 5-review.md
 ├── .state/                      # Greenfield state
 ├── .ddd_workspaces/             # Greenfield workspaces
 ├── docs/features/               # Greenfield feature docs
 └── playbooks/                   # Deployment automation
 ```
 
-## The Factory
+## Quick Start
 
-Three phases transform idea → working app:
-
-1. **Vision Synthesis** → `VISION.md` (features, scope)
-2. **Technical Foundation** → `ARCHITECTURE.md`, `ROADMAP.md`
-3. **Feature Implementation** → Working code via DDD loop
-
-## Quick Start: Greenfield Mode
+### Step 1: Set Mode
 
 ```
-# Phase 1: Vision
-Use vision-architect agent to produce VISION.md
-
-# Phase 2: Architecture
-Use tech-architect agent to produce ARCHITECTURE.md + ROADMAP.md
-
-# Phase 3: Build (repeat for each feature)
-/ddd/1  → Understand (create FEATURE_SPEC.md)
-/ddd/2  → Document (create DOCS_DRAFT.md)
-/ddd/3  → Code-Breakdown (create IMPLEMENTATION_PLAN.md)
-/ddd/4  → Implement (write code, tests)
-/ddd/5  → Review (finalize, complete)
+/mode greenfield    # Building a new app
+/mode enhancer      # Enhancing an existing app
 ```
 
-## Quick Start: Enhancer Mode
-
-Use this when enhancing an EXISTING app (not building from scratch).
+### Step 2: Initialize
 
 ```
-# In the target repo you want to enhance:
-
-# Step 1: Initialize beachhead
-/enhancer/init              → Creates .enhancer/ directory
-
-# Phase 0: Discovery
-/enhancer/discovery         → Produces .enhancer/DISCOVERY.md
-
-# Phase 1: Vision (same agents, output to .enhancer/)
-Use vision-architect        → .enhancer/VISION.md
-
-# Phase 2: Architecture
-Use tech-architect          → .enhancer/ARCHITECTURE.md, ROADMAP.md
-
-# Phase 3: Build (enhancement DDD)
-/enhancer/ddd/1  → Understand (E-F1, E-F2... feature IDs)
-/enhancer/ddd/2  → Document
-/enhancer/ddd/3  → Code-Breakdown (includes integration planning)
-/enhancer/ddd/4  → Implement (with regression testing)
-/enhancer/ddd/5  → Review
+/init               # Sets up structure based on mode
 ```
 
-### Enhancer Beachhead
+### Step 3: Build
 
-When enhancer mode is initialized, everything lives in `.enhancer/`:
-
+**Greenfield:**
 ```
-target-repo/
-├── [their existing files]
-├── .claude/commands/enhancer/  # Enhancement commands
-└── .enhancer/                  # YOUR beachhead
-    ├── DISCOVERY.md            # What exists (Phase 0)
-    ├── VISION.md               # What to add (Phase 1)
-    ├── ARCHITECTURE.md         # How to build (Phase 2)
-    ├── ROADMAP.md              # Build order (Phase 2)
-    ├── state/project.json      # Progress tracking
-    ├── workspaces/             # DDD workspaces
-    └── docs/features/          # Enhancement documentation
+Phase 1: vision-architect  → VISION.md
+Phase 2: tech-architect    → ARCHITECTURE.md, ROADMAP.md
+Phase 3: /ddd/1 through /ddd/5 (repeat for each feature)
 ```
 
-### Key Differences
+**Enhancer:**
+```
+Phase 0: /discovery        → .enhancer/DISCOVERY.md
+Phase 1: vision-architect  → .enhancer/VISION.md
+Phase 2: tech-architect    → .enhancer/ARCHITECTURE.md, ROADMAP.md
+Phase 3: /ddd/1 through /ddd/5 (repeat for each enhancement)
+```
+
+## Command Reference
+
+| Command | Purpose |
+|---------|---------|
+| `/mode` | Set or show current mode |
+| `/init` | Initialize project structure |
+| `/discovery` | Phase 0: Analyze existing codebase (enhancer only) |
+| `/ddd/1` | DDD Step 1: Understand |
+| `/ddd/2` | DDD Step 2: Document |
+| `/ddd/3` | DDD Step 3: Code-Breakdown |
+| `/ddd/4` | DDD Step 4: Implement |
+| `/ddd/5` | DDD Step 5: Review |
+
+## Mode Differences
 
 | Aspect | Greenfield | Enhancer |
 |--------|------------|----------|
-| Phase 0 | None | Discovery (required) |
-| Feature IDs | F1, F2 | E-F1, E-F2 |
+| Phase 0 | Skipped | Required (/discovery) |
+| Feature IDs | F1, F2, F3 | E-F1, E-F2, E-F3 |
 | State | `.state/` | `.enhancer/state/` |
 | Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
-| Focus | Build new | Integrate with existing |
+| Vision | `VISION.md` | `.enhancer/VISION.md` |
 | Testing | New tests | New + regression tests |
+
+## Enhancer Beachhead
+
+When in enhancer mode, all your work lives in `.enhancer/`:
+
+```
+target-repo/
+├── [their existing files]       # Untouched
+├── .mode                        # "enhancer"
+└── .enhancer/                   # Your beachhead
+    ├── DISCOVERY.md             # Phase 0 output
+    ├── VISION.md                # Phase 1 output
+    ├── ARCHITECTURE.md          # Phase 2 output
+    ├── ROADMAP.md               # Phase 2 output
+    ├── state/project.json
+    ├── workspaces/
+    └── docs/features/
+```
 
 ## Rules
 

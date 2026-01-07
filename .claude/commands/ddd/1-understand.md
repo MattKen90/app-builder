@@ -1,25 +1,67 @@
 ---
 description: DDD Step 1 - Understand and approve feature spec before implementation
-argument-hint: [feature-id] (e.g., F1, F2) - optional, auto-detects next feature if omitted
+argument-hint: [feature-id] (e.g., F1, E-F1) - optional, auto-detects next feature if omitted
 ---
 
 # DDD Step 1: Understand
 
 **Mission**: Select next feature, create workspace, understand spec, get human approval before building.
 
-**Input**:
-- `ROADMAP.md` (ordered feature list with dependencies)
-- `ARCHITECTURE.md` (technical approach)
-- `.state/project.json` (what's done/in-progress)
+**Mode-Aware**: This command adapts to greenfield or enhancer mode by reading `.mode` file.
+
+---
+
+## Mode Detection
+
+Read `.mode` file and set paths accordingly:
+
+| Resource | Greenfield | Enhancer |
+|----------|------------|----------|
+| State | `.state/project.json` | `.enhancer/state/project.json` |
+| Roadmap | `ROADMAP.md` | `.enhancer/ROADMAP.md` |
+| Architecture | `ARCHITECTURE.md` | `.enhancer/ARCHITECTURE.md` |
+| Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
+| Feature prefix | F | E-F |
+| Extra context | - | `.enhancer/DISCOVERY.md` |
+
+**If mode not set:**
+```
+⚠️ Mode Not Set
+
+Please set mode first: /mode <greenfield|enhancer>
+Then run /init to set up project structure.
+```
+
+---
+
+**Input** (paths depend on mode):
+- `{ROADMAP_PATH}` (ordered feature list with dependencies)
+- `{ARCHITECTURE_PATH}` (technical approach)
+- `{STATE_PATH}` (what's done/in-progress)
+- `{DISCOVERY_PATH}` (enhancer mode only - existing codebase context)
 
 **Output**:
-- `.ddd_workspaces/{feature-id}-{feature-name}/FEATURE_SPEC.md`
-- Updated `.state/project.json`
+- `{WORKSPACE_PATH}/{feature-id}-{feature-name}/FEATURE_SPEC.md`
+- Updated `{STATE_PATH}`
 - Human approval to proceed
 
 ---
 
 ## Process
+
+### Step 0: Load Mode and Paths
+
+```
+🔍 Detecting mode...
+
+Mode: {greenfield|enhancer}
+
+Paths:
+- State: {STATE_PATH}
+- Roadmap: {ROADMAP_PATH}
+- Workspaces: {WORKSPACE_PATH}
+- Feature prefix: {F|E-F}
+```
 
 ### Step 1: Determine Next Feature
 

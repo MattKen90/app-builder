@@ -6,13 +6,28 @@ description: DDD Step 3 - Break down implementation into phases with checkpoints
 
 **Mission**: Break the feature into implementation phases. Each phase is a buildable, testable unit with clear deliverables.
 
-**Input**:
-- `.ddd_workspaces/{feature}/FEATURE_SPEC.md`
-- `.ddd_workspaces/{feature}/DOCS_DRAFT.md`
-- `ARCHITECTURE.md`
+**Mode-Aware**: Reads `.mode` file to determine paths. In enhancer mode, phases include integration planning.
+
+---
+
+## Mode Detection
+
+| Resource | Greenfield | Enhancer |
+|----------|------------|----------|
+| Workspaces | `.ddd_workspaces/` | `.enhancer/workspaces/` |
+| Architecture | `ARCHITECTURE.md` | `.enhancer/ARCHITECTURE.md` |
+| Extra context | - | `.enhancer/DISCOVERY.md` (integration points) |
+
+---
+
+**Input** (paths depend on mode):
+- `{WORKSPACE_PATH}/{feature}/FEATURE_SPEC.md`
+- `{WORKSPACE_PATH}/{feature}/DOCS_DRAFT.md`
+- `{ARCHITECTURE_PATH}`
+- `{DISCOVERY_PATH}` (enhancer mode: existing patterns to follow)
 
 **Output**:
-- `.ddd_workspaces/{feature}/IMPLEMENTATION_PLAN.md`
+- `{WORKSPACE_PATH}/{feature}/IMPLEMENTATION_PLAN.md`
 
 ---
 
