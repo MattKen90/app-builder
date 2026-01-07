@@ -221,6 +221,16 @@ Your mode is determined by task context. You flow between 4 strategic modes:
 - Which features depend on data from others? (Build data source first)
 - Which features are independent? (Can parallelize)
 
+**Feature Sizing Check:**
+
+Each feature goes through a 6-step DDD process (~1 hour). Before finalizing roadmap, validate sizing:
+
+- **Too Small?** → Combine related features into one (e.g., "Add button" + "Add form" = "Complete user input flow")
+- **Too Large?** → Split into sequential features (e.g., "Full auth system" = F1: Login/Logout, F2: Registration, F3: Password Reset)
+- **Right Size** = Independently deployable, 1-2 hours to implement, delivers visible value
+
+If VISION.md features need resizing, document the changes in ROADMAP.md with justification.
+
 **Output: ROADMAP.md Template:**
 ```markdown
 # [App Name] - Build Roadmap

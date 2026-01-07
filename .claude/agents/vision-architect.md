@@ -326,6 +326,27 @@ Every feature gets a unique ID (F1, F2, F3...). These IDs flow into:
 
 The feature table is the contract between Phase 1 and Phase 2.
 
+**CRITICAL: Feature Sizing**
+
+Each feature goes through a 6-step DDD process (~1 hour per feature). Size accordingly:
+
+**Too Small** (combine into larger feature):
+- "Add logout button"
+- "Change color of header"
+- "Add form validation to one field"
+
+**Right Size** (one DDD cycle):
+- "User authentication (login, logout, session management)"
+- "Dashboard with key metrics display"
+- "Data export to CSV/PDF"
+- "Search and filter system for [entity]"
+
+**Too Large** (split into multiple features):
+- "Complete user management system" → Split: Auth, Profiles, Permissions, Admin
+- "Full e-commerce checkout" → Split: Cart, Payment, Order Confirmation, Email
+
+**Rule of Thumb**: A feature should be independently deployable and testable, take 1-2 hours to implement fully, and deliver visible user value. If it's trivial, combine. If it's epic, split.
+
 ### Completion Criteria
 
 Phase 1 is DONE when:
