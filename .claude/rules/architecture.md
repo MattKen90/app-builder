@@ -36,7 +36,22 @@ Clear separation between App Builder infrastructure and the app being built.
 
 ```
 project-root/
-├── .claude/                    # Builder infrastructure (DO NOT MIX)
+├── .claude/
+│   ├── commands/
+│   │   ├── phases/             # Builder commands (root = builder)
+│   │   ├── ddd/
+│   │   ├── init.md
+│   │   ├── set-state.md
+│   │   └── app/                # App commands (/app/...)
+│   ├── skills/
+│   │   ├── claude-code-builder/  # Builder skills
+│   │   └── app/                # App skills
+│   └── rules/
+│       ├── architecture.md     # Builder rules
+│       ├── revenue.md
+│       ├── development.md
+│       └── app/                # App rules
+│
 ├── .state.json                 # Builder state
 ├── .ddd_workspaces/            # DDD working directories
 ├── CLAUDE.md                   # Builder operations
@@ -54,7 +69,10 @@ project-root/
     └── ...
 ```
 
-**Key Rule:** All app code goes in `app/`. Never mix with builder infrastructure.
+**Key Rules:**
+- All app code goes in `app/`
+- App primitives go in `.claude/{commands,skills,rules}/app/`
+- Builder primitives stay at root level (no nesting)
 
 ---
 
